@@ -68,7 +68,3 @@ src/
 │   └── pages/           # Telas da aplicação
 ├── assets/
 ├── environments/
-
-
-
-
