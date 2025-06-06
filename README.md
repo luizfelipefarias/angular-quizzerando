@@ -8,7 +8,7 @@ Este projeto é uma **reimplementação em Angular** do [Frontend Quizzerando](h
 
 - [Angular 17+](https://angular.io/)
 - [RxJS](https://rxjs.dev/)
-- HTML5 + CSS3 (responsivo)
+- [HTML5](https://developer.mozilla.org/pt-BR/docs/Web/HTML) + [CSS3](https://developer.mozilla.org/pt-BR/docs/Web/CSS) (responsivo)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Angular CLI](https://angular.io/cli)
 
@@ -23,14 +23,22 @@ Este projeto é uma **reimplementação em Angular** do [Frontend Quizzerando](h
 - Timer regressivo para desafios de tempo
 
 ---
-## Pré-requisitos
+
+## 🔧 Pré-requisitos
+
 - Node.js 18+
-- Angular CLI (npm install -g @angular/cli)
+- Angular CLI (`npm install -g @angular/cli`)
 - Navegador moderno (Chrome, Edge, Firefox)
 
-## Autores
-- Feito por @impedrohenri (versão original em React)
-- Adaptado para Angular por @luizfelipefarias,@impedrohenri  e  @8VINO
+---
+
+## 👥 Autores
+
+- Versão original em React: [@impedrohenri](https://github.com/impedrohenri)
+- Adaptado para Angular por:
+  - [@luizfelipefarias](https://github.com/luizfelipefarias)
+  - [@impedrohenri](https://github.com/impedrohenri)
+  - [@8VINO](https://github.com/8VINO)
 
 ---
 
@@ -48,23 +56,23 @@ Este projeto é uma **reimplementação em Angular** do [Frontend Quizzerando](h
 
 ## 🚀 Como Executar Localmente
 
-### 1. Clonar o repositório
-
 ```bash
+# Clonar o repositório
 git clone https://github.com/SEU_USUARIO/angular-quizzerando.git
 cd angular-quizzerando
 
-Instalar dependências
+# Instalar dependências
 npm install
 
-Rodar o servidor de desenvolvimento
+# Rodar o servidor de desenvolvimento
 ng serve
 
+#Estrutura de Pastas
 src/
 ├── app/
 │   ├── components/      # Componentes visuais
 │   ├── services/        # Serviços com lógica de negócio
 │   ├── models/          # Interfaces e tipos
 │   └── pages/           # Telas da aplicação
-├── assets/
-├── environments/
+├── assets/              # Imagens e recursos estáticos
+├── environments/        # Configurações de ambiente
