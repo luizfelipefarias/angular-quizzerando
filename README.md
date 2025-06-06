@@ -1,27 +1,73 @@
-# AngularFrontQuiz
+# 🧠 Frontend Quizzerando (Versão Angular)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+Este projeto é uma **reimplementação em Angular** do [Frontend Quizzerando](https://github.com/impedrohenri/frontend-quizzerando), originalmente criado com React. A aplicação simula um quiz interativo com foco em usabilidade e design moderno.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 📦 Tecnologias Utilizadas
 
-## Code scaffolding
+- [Angular 17+](https://angular.io/)
+- [RxJS](https://rxjs.dev/)
+- HTML5 + CSS3 (responsivo)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Angular CLI](https://angular.io/cli)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+## ✨ Funcionalidades
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Seleção de categorias de perguntas
+- Interface dinâmica e responsiva
+- Feedback imediato sobre respostas
+- Contador de pontuação e progresso
+- Timer regressivo para desafios de tempo
 
-## Running unit tests
+---
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 🔄 O que mudou da versão React?
 
-## Running end-to-end tests
+| React                              | Angular                                |
+|------------------------------------|----------------------------------------|
+| React hooks (`useState`, etc.)     | Services + RxJS + Angular Forms        |
+| JSX e componentes funcionais       | Angular templates + TypeScript         |
+| CSS Modules ou styled-components   | Estilização via CSS e `:host` bindings |
+| React Router                       | Angular Router                         |
+| State via useContext/useReducer    | Injeção de dependência + RxJS          |
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+---
 
-## Further help
+## 🚀 Como Executar Localmente
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### 1. Clonar o repositório
+
+```bash
+git clone https://github.com/SEU_USUARIO/angular-quizzerando.git
+cd angular-quizzerando
+
+Instalar dependências
+npm install
+
+Rodar o servidor de desenvolvimento
+ng serve
+
+src/
+├── app/
+│   ├── components/      # Componentes visuais
+│   ├── services/        # Serviços com lógica de negócio
+│   ├── models/          # Interfaces e tipos
+│   └── pages/           # Telas da aplicação
+├── assets/
+├── environments/
+
+
+Pré-requisitos
+Node.js 18+
+
+Angular CLI (npm install -g @angular/cli)
+
+Navegador moderno (Chrome, Edge, Firefox)
+
+Autor
+Feito por @impedrohenri (versão original em React)
+Adaptado para Angular por @luizfelipefarias,@impedrohenri  e  @8VINO
+
