@@ -23,14 +23,14 @@ Este projeto é uma **reimplementação em Angular** do [Frontend Quizzerando](h
 - Timer regressivo para desafios de tempo
 
 ---
-##Pré-requisitos
--Node.js 18+
--Angular CLI (npm install -g @angular/cli)
--Navegador moderno (Chrome, Edge, Firefox)
+## Pré-requisitos
+- Node.js 18+
+- Angular CLI (npm install -g @angular/cli)
+- Navegador moderno (Chrome, Edge, Firefox)
 
-##Autores
--Feito por @impedrohenri (versão original em React)
--Adaptado para Angular por @luizfelipefarias,@impedrohenri  e  @8VINO
+## Autores
+- Feito por @impedrohenri (versão original em React)
+- Adaptado para Angular por @luizfelipefarias,@impedrohenri  e  @8VINO
 
 ---
 
