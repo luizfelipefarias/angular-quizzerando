@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-esqueceu-senha',
@@ -9,4 +10,8 @@ import { Component } from '@angular/core';
 })
 export class EsqueceuSenhaComponent {
 
+  constructor(private serviceTitle: Title){
+    this.serviceTitle.setTitle('Recuperar senha')
+  }
+  
 }

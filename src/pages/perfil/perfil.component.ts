@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-perfil',
@@ -8,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrl: './perfil.component.css'
 })
 export class PerfilComponent {
+
+    constructor(private serviceTitle: Title){
+    this.serviceTitle.setTitle('Meu Perfil')
+  }
 
 }

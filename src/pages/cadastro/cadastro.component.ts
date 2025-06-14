@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cadastro',
@@ -8,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrl: './cadastro.component.css'
 })
 export class CadastroComponent {
+  
+  constructor(private serviceTitle: Title){
+    this.serviceTitle.setTitle('Cadastre-se')
+  }
 
 }
