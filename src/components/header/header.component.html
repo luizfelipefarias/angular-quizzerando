@@ -1,0 +1,29 @@
+<!-- classroom-header.component.html -->
+<mat-toolbar color="primary" class="header">
+  <div class="header-left">
+    <a href="/">
+      <div class="logo-container">
+
+        <img src="../../assets/logo_symbol.svg" class="img-symbol" alt="">
+        <img src="../../assets/logo_text.svg" class="img-text" alt="">
+
+      </div>
+    </a>
+  </div>
+
+  <div class="header-center">
+  </div>
+
+  <div class="header-right" *ngIf="!isMobile">
+    <ng-container>
+      <a mat-button href="/">Home</a>
+      <a mat-button href="/historico">Histórico</a>
+      <a mat-button href="/perfil">Perfil</a>
+      <a mat-button href="/login">Sair</a>
+    </ng-container>
+  </div>
+  <button mat-icon-button (click)="alternarMenu()" *ngIf="isMobile">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+</mat-toolbar>
