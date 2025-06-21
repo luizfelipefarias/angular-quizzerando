@@ -1,1 +1,90 @@
-<p>cadastro works!</p>
+<div class="d-flex flex-wrap vh-100 align-items-stretch w-100">
+  <div class="form-cadastro col-12 col-md-7 d-flex align-items-center justify-content-center">
+    <div class="card p-4 bg-light border border-light rounded-4" style="width: 23rem;">
+      <h4 class="text-center mb-4">Cadastre-se</h4>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate [class.was-validated]="validated" autocomplete="off">
+
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input
+            id="nome"
+            type="text"
+            formControlName="nome"
+            placeholder="Digite o seu nome"
+            required
+            class="form-control"
+            [class.is-invalid]="form.get('nome')?.invalid && (form.get('nome')?.touched || validated)"
+            (input)="onInputChange()"
+          />
+          <div class="invalid-feedback">
+            Por favor, digite um nome válido (mínimo 5 caracteres).
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="Digite o seu email"
+            required
+            class="form-control"
+            [class.is-invalid]="form.get('email')?.invalid && (form.get('email')?.touched || validated)"
+            (input)="onInputChange()"
+          />
+          <div class="invalid-feedback">
+            Por favor, digite um email válido.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="senha" class="form-label">Senha</label>
+          <input
+            id="senha"
+            type="password"
+            formControlName="senha"
+            placeholder="Digite sua senha"
+            required
+            minlength="8"
+            class="form-control"
+            [class.is-invalid]="form.get('senha')?.invalid && (form.get('senha')?.touched || validated)"
+            (input)="onInputChange()"
+          />
+          <div class="invalid-feedback">
+            A senha deve ter no mínimo 8 caracteres.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="confirmar" class="form-label">Confirmar senha</label>
+          <input
+            id="confirmar"
+            type="password"
+            formControlName="confirmar"
+            placeholder="Digite sua senha novamente"
+            required
+            minlength="8"
+            class="form-control"
+            [class.is-invalid]="form.get('confirmar')?.invalid && (form.get('confirmar')?.touched || validated)"
+            (input)="onInputChange()"
+          />
+          <div class="invalid-feedback">
+            As senhas devem coincidir.
+          </div>
+        </div>
+
+        <div *ngIf="passwordMatchError" class="text-danger py-0 my-0">
+          {{ passwordMatchError }}
+        </div>
+
+        <div class="d-flex justify-content-between mt-2 pt-4">
+          <button type="button" class="btn btn-outline-secondary" routerLink="/login">Voltar</button>
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Cadastrar</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

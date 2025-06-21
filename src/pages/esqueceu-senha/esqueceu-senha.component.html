@@ -1,1 +1,43 @@
-<p>esqueceu-senha works!</p>
+
+<div class="d-flex flex-wrap vh-100 align-items-stretch w-100">
+
+  <ng-template #modalContent let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">E-mail enviado</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body fs-5">
+      Um link foi enviado para o seu e-mail com as instruções para redefinição de senha.
+    </div>
+  </ng-template>
+
+  <div class="form-esqueceu-senha col-12 col-md-7 d-flex align-items-center justify-content-center">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(modalContent)" novalidate [class.was-validated]="validated" autocomplete="off" style="width: 23rem;" class="p-4 bg-light border border-light rounded-4">
+      <h4 class="text-center mb-3">Esqueceu a senha?</h4>
+      <p style="color: gray;">
+        Não se preocupe, informe o seu email abaixo para começar o processo de recuperação do acesso à conta.
+      </p>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="form-control"
+          placeholder="Digite o seu email"
+          required
+          [class.is-invalid]="email?.invalid && (email?.touched || validated)"
+        />
+        <div class="invalid-feedback">
+          Por favor, digite um email válido.
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between mt-4 pt-4">
+        <button class="btn btn-outline-secondary" routerLink="/login" type="button">Voltar</button>
+        <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Enviar</button>
+      </div>
+    </form>
+  </div>
+</div>

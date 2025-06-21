@@ -1,1 +1,84 @@
-<p>login works!</p>
+<div class="d-flex flex-wrap vh-100 align-items-stretch w-100">
+
+  <div class="form-login-senha col-12 col-md-7 d-flex flex-column align-items-center justify-content-center">
+    <div class="card p-4 bg-light border border-light rounded-4" style="width: 23rem;">
+      <h4 class="text-center mb-4">Realizar login</h4>
+
+      <form
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+        novalidate
+        [class.was-validated]="validated"
+        autocomplete="off"
+      >
+        <!-- campo email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="Digite o seu email"
+            required
+            class="form-control"
+            [class.is-invalid]="
+              form.get('email')?.invalid &&
+              (form.get('email')?.touched || validated)
+            "
+            (input)="onInputChange()"
+            autocomplete="email"
+          />
+          <div class="invalid-feedback">
+            Por favor, insira um email válido.
+          </div>
+        </div>
+
+        <!-- campo Senha -->
+        <div class="mb-3">
+          <label for="senha" class="form-label">Senha</label>
+          <input
+            id="senha"
+            type="password"
+            formControlName="senha"
+            placeholder="Digite sua senha"
+            required
+            class="form-control"
+            [class.is-invalid]="
+              form.get('senha')?.invalid &&
+              (form.get('senha')?.touched || validated)
+            "
+            (input)="onInputChange()"
+            autocomplete="current-password"
+          />
+          <div class="invalid-feedback">
+            Informe uma senha.
+          </div>
+        </div>
+
+        <!-- mensagem de erro geral -->
+        <div *ngIf="loginInvalido" class="text-danger my-0 py-0">
+          {{ loginInvalido }}
+        </div>
+
+        <!-- esqueceu senha criar conta e botão -->
+        <div class="d-flex justify-content-between align-items-end mt-3 pt-2">
+          <a routerLink="/esqueceu-senha" class="mt-auto">Esqueceu a senha?</a>
+          <button
+          type="submit"
+          class="btn btn-primary ms-auto"
+          [disabled]="form.invalid">
+                       Entrar
+          </button>
+
+        </div>
+      </form>
+    </div>
+
+
+
+    <p class="text-center mt-4">
+      Ainda não possui uma conta?
+       <button (click)="goToCadastro()">Clique aqui</button> para se cadastrar
+    </p>
+  </div>
+</div>
