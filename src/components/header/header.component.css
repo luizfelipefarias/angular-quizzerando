@@ -1,0 +1,76 @@
+/* classroom-header.component.scss */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  height: 64px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  min-width: 240px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  cursor: pointer;
+  gap: 10px;
+  img{
+    height: 35px;
+  }
+  .img-text{
+    height: 30px;
+  }
+}
+
+.logo-icon {
+  margin-right: 8px;
+  font-size: 32px;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.header-center {
+  flex: 1;
+  max-width: 720px;
+  margin: 0 20px;
+}
+
+.search-field {
+  width: 100%;
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+  .mat-form-field-outline {
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 8px;
+  }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  min-width: 240px;
+  justify-content: flex-end;
+}
+
+.user-icon {
+  font-size: 32px;
+}
+
+.mat-icon-button {
+  margin: 0 4px;
+}
