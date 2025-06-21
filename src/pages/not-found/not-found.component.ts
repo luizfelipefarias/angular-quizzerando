@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
+
 @Component({
   selector: 'app-not-found',
   standalone: true,
@@ -10,6 +11,6 @@ import { Title } from '@angular/platform-browser';
 })
 export class NotFoundComponent {
     constructor(private serviceTitle: Title){
-    this.serviceTitle.setTitle('Página não encontrada :(')
+    this.serviceTitle.setTitle('Página não encontrada')
   }
 }
