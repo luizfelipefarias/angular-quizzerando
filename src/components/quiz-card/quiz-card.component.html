@@ -1,1 +1,44 @@
-<p>quiz-card works!</p>
+
+  <div class="card col-12 rounded-4">
+    <div class="card-header rounded-top-4 position-relative text-truncate" style="font-size: 1rem;">
+      {{ quiz.titulo }}
+    </div>
+    <div class="card-body d-flex flex-wrap justify-content-between row-gap-4">
+      <div class="col-3"><i class="{{categoriaI}}"></i></div>
+      <p class="ps-2 col-9 text-truncate">
+        {{ quiz.descricao }}
+      </p>
+      <span>
+        <span class="border fs-7 rounded-pill px-2">{{ quiz.categoria }}</span>
+      </span>
+      <a routerLink="/quiz/{{quiz.id}}" class="btn btn-primary rounded-pill py-1">Responder</a>
+    </div>
+    <div class="card-footer" *ngIf="role === 'admin'">
+      <div class="d-flex align-items-evenly justify-content-evenly">
+        <!-- Edit button -->
+        <a routerLink="/quiz/{{quiz.id}}/editar" class="text-primary me-3">
+          <i class='fa fa-edit'></i> Editar
+        </a>
+
+        <!-- Delete button -->
+        <div role="button" (click)="openDeleteModal()" class="text-danger">
+          <i class='fa fa-trash'></i> Excluir
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Delete confirmation modal -->
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title fs-5">Deletar quiz</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    Deseja mesmo deletar esse quiz?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="handleDelete(); modal.close()">Confirmar</button>
+  </div>
+</ng-template>

@@ -1,0 +1,12 @@
+{
+    "Tecnologia": "fa fa-microchip text-bg-success fs-2 p-3 my-auto  rounded-4",
+    "Ciências": "fa fa-flask text-bg-success fs-2 p-3 my-auto rounded-4",
+    "História": "fa fa-hourglass-half text-bg-warning fs-2 p-3 my-auto rounded-4",
+    "Geografia": "fa fa-globe text-bg-primary fs-2 p-3 my-auto rounded-4",
+    "Artes": "fa fa-paint-brush text-bg-danger fs-2 p-3 my-auto rounded-4",
+    "Entretenimento": "fa fa-film text-bg-secondary fs-2 p-3 my-auto rounded-4",
+    "Esportes": "fa fa-soccer-ball-o text-bg-light fs-2 p-3 my-auto rounded-4",
+    "Literatura": "fa fa-book text-bg-warning text-light fs-2 p-3 my-auto rounded-4",
+    "Atualidades": "fa fa-newspaper-o text-bg-secondary fs-2 p-3 my-auto rounded-4",
+    "Conhecimentos Gerais": "fa fa-hashtag text-bg-dark fs-2 p-3 my-auto rounded-4"
+}

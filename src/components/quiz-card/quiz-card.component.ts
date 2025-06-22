@@ -1,12 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router, RouterLink, RouterModule } from '@angular/router';
+import { AuthService } from '../../contexts/authContexts';
+import { Quiz, QuizzesService } from '../../app/services/quizzes.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-quiz-card',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './quiz-card.component.html',
-  styleUrl: './quiz-card.component.css'
+  styleUrls: ['./quiz-card.component.css']
 })
-export class QuizCardComponent {
+export class QuizCardComponent implements OnInit {
 
+  @Input() quiz: any;
+  @Input() categoriaI: string = '';
+  token: string|null = '';
+  role: string|null = '';
+
+  constructor(
+    private quizService: QuizzesService,
+    private authService: AuthService,
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.token = this.authService.token;
+    this.role = this.authService.role
+  }
+
+  openDeleteModal() {
+   
+  }
+
+  handleDelete() {
+    
+  }
 }
