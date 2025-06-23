@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_URL } from '../app.routes';
 
 export interface Pergunta{
   enunciado: string,
@@ -21,7 +22,7 @@ export interface Quiz{
   providedIn: 'root'
 })
 export class QuizzesService {
-  private readonly url = "https://quizzerando-api.onrender.com/quizz"
+  private readonly url = API_URL + "/quizz"
   private token = localStorage.getItem("auth")
 
   listaQuizzes: Quiz[] = [];
@@ -35,5 +36,16 @@ export class QuizzesService {
     )});
   }
 
+  getQuizById(quizId: string | null): Observable<Quiz>{
+    return this.http.get<Quiz>(`${this.url}/${quizId}`, {headers: new HttpHeaders(
+				{'Authorization': `Bearer ${this.token}`}
+    )});
+  }
+
+  getPerguntasByQuizId(quizId: string | null){
+    return this.http.get<Pergunta[]>(`${this.url}/${quizId}/perguntas`, {headers: new HttpHeaders(
+				{'Authorization': `Bearer ${this.token}`}
+    )});
+  }
 
 }

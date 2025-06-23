@@ -1,1 +1,25 @@
-<p>pergunta-quiz works!</p>
+<div class="col-11 col-sm-9 col-md-8 col-lg-6 mb-3 mx-auto">
+    <ngb-progressbar [value]="indexPergunta + 1" [max]="perguntasLength" [height]="'20px'" class="border border-1">
+        {{indexPergunta + 1}} / {{perguntasLength}}
+    </ngb-progressbar>
+</div>
+<div class="card col-11 col-sm-9 col-md-8 col-lg-6 p-4 mx-auto row-gap-4 ">
+    <h5>{{pergunta.enunciado}}</h5>
+
+
+    <div *ngFor="let alt of alternativasEmbaralhadas[indexPergunta]">
+        <label class="form-check-label" [for]="alt.valor">
+            <input class="form-check-input me-2" type="radio" name="alternaativas" [id]="alt.valor">
+            {{ alt.texto }}
+        </label>
+    </div>
+
+    <div class="d-flex">
+        <button class="btn btn-outline-secondary rounded-pill px-4 " (click)="handleGoBack()"
+            *ngIf="indexPergunta > 0">Voltar</button>
+        <button class="btn btn-primary rounded-pill fw-medium px-4 ms-auto" (click)="handleNext()"
+            *ngIf="perguntas.length > indexPergunta + 1">próxima</button>
+        <button class="btn btn-primary rounded-pill fw-medium px-4 ms-auto" (click)="handleFinish()"
+            *ngIf="perguntasLength == indexPergunta+1">Finalizar</button>
+    </div>
+</div>
