@@ -1,2 +1,27 @@
-<p>quiz-pages works!</p>
-<code>id: {{ quizId }}</code>
+<div class="full-screen d-flex align-items-center">
+
+  <div class="card col-11 col-sm-9 col-md-8 col-lg-6 p-4 mx-auto row-gap-4 my-auto" *ngIf="quizStatus == 'toInit'">
+    <h4>{{ quiz.titulo }}</h4>
+    <div class="row d-flex justify-content-between">
+      <div class="col-2"><i [class]="catIcons[quiz.categoria]"></i></div>
+      <p class="col-9 col-md-10">{{ quiz.descricao }}</p>
+    </div>
+    <h6>Categoria: <span>{{ quiz.categoria }}</span></h6>
+
+    <span class="text-black-50">Observação: caso seja desconectado antes de finalizar o quiz, todo o progresso será
+      perdido.</span>
+
+    <hr class="mb-0 pb-0">
+    <div class="d-flex justify-content-around">
+      <a href="javascript:void(0)" (click)="handleExit()"><button class="btn btn-outline-secondary rounded-pill px-4">Voltar</button></a>
+      <button class="btn btn-primary rounded-pill fw-medium px-4" (click)="handleInitQuiz()">Iniciar quiz</button>
+    </div>
+  </div>
+
+
+  <div class="w-100" *ngIf="quizStatus == 'onGoing'">
+    <app-pergunta-quiz [perguntas]="perguntas">
+    </app-pergunta-quiz>
+  </div>
+
+</div>

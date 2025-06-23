@@ -1,0 +1,9 @@
+.form-check-input{
+    width: 20px;
+    height: 20px;
+}
+
+.form-check-label{
+    display: flex;
+    text-wrap: wrap;
+}

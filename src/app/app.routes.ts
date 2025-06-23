@@ -24,3 +24,5 @@ export const routes: Routes = [
     
     {path: '**', component: NotFoundComponent}
 ];
+
+export const API_URL = 'https://quizzerando-api.onrender.com';

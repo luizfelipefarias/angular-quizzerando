@@ -1,12 +1,76 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Pergunta } from '../../app/services/quizzes.service';
+import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-pergunta-quiz',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, NgbProgressbarModule,],
   templateUrl: './pergunta-quiz.component.html',
   styleUrl: './pergunta-quiz.component.css'
 })
 export class PerguntaQuizComponent {
+  @Input() perguntas: Pergunta[] = [];
+  protected perguntasLength: number = this.perguntas.length;
+  protected pergunta: Pergunta = {
+    enunciado: '',
+    respCorreta: '',
+    alternativa1: '',
+    alternativa2: '',
+    alternativa3: '',
+    alternativa4: ''
+  };
+  protected indexPergunta: number = 0;
+  protected alternativasEmbaralhadas: { valor: string, texto: string }[][] = [];
+  
+  
+  ngOnChanges(changes: SimpleChanges): void {
+  if (changes['perguntas'] && this.perguntas.length > 0) {
+    this.indexPergunta = 0;
+    this.perguntasLength = this.perguntas.length;
+    this.pergunta = this.perguntas[this.indexPergunta];
+    
+    this.alternativasEmbaralhadas = this.perguntas.map(pergunta => {
+        return this.embaralharAlternativas(pergunta)
+      })
+
+    console.log("Alternativas embaralhadas:", this.alternativasEmbaralhadas);
+  }
+}
+  
+  embaralharAlternativas(pergunta: Pergunta): { valor: string, texto: string }[] {
+  const alternativas = [
+    { valor: 'alternativa1', texto: pergunta.alternativa1 },
+    { valor: 'alternativa2', texto: pergunta.alternativa2 },
+    { valor: 'alternativa3', texto: pergunta.alternativa3 },
+    { valor: 'alternativa4', texto: pergunta.alternativa4 },
+    { valor: 'respCorreta', texto: pergunta.respCorreta }
+  ].filter(alt => alt.texto); 
+
+  for (let i = alternativas.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [alternativas[i], alternativas[j]] = [alternativas[j], alternativas[i]];
+  }
+
+  return alternativas;
+}
+  
+
+  handleNext(){
+    this.indexPergunta++;
+    this.pergunta = this.perguntas[this.indexPergunta];
+    console.log(this.perguntas)
+  }
+
+  handleGoBack(){
+    this.indexPergunta--;
+    this.pergunta = this.perguntas[this.indexPergunta];
+  }
+
+  handleFinish(){
+
+  }
 
 }
