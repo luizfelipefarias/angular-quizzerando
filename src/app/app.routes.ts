@@ -9,6 +9,7 @@ import { NotFoundComponent } from '../pages/not-found/not-found.component';
 import { QuizPagesComponent } from '../pages/quiz-pages/quiz-pages.component';
 import { CriarQuizComponent } from '../pages/criar-quiz/criar-quiz.component';
 import { EditarQuizComponent } from '../pages/editar-quiz/editar-quiz.component';
+import { ResultadoQuizComponent } from '../components/resultado-quiz/resultado-quiz.component';
 
 export const routes: Routes = [
     {path: 'cadastro', component: CadastroComponent},
@@ -21,6 +22,6 @@ export const routes: Routes = [
     {path: 'quiz/criar', component: CriarQuizComponent}, //     ESSA linha PRECISA ficar acima
     {path: 'quiz/:id', component: QuizPagesComponent}, // <---  DESSA
     {path: 'quiz/:id/editar', component: EditarQuizComponent},
-    
+    {path: 'resultado', component: ResultadoQuizComponent},
     {path: '**', component: NotFoundComponent}
 ];

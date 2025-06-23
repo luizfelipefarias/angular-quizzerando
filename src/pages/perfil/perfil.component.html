@@ -1,1 +1,117 @@
-<p>perfil works!</p>
+<div class="form-perfil col-12 d-flex align-items-center justify-content-center vh-100">
+  <div class="card p-4 bg-light border-light-subtle rounded-4" style="width: 50rem;">
+    <h4 class="text-center">Seus dados</h4>
+
+    <form>
+
+      <div class="mb-3">
+        <label>Nome</label>
+        <div class="d-flex align-items-center gap-2">
+          <input type="text" class="form-control" placeholder="nome" disabled />
+          <button type="button" class="btn p-0 border-0 bg-transparent" (click)="abrirModal(modalNome)">
+            <img src="../assets/edit.svg" alt="edit" height="40" />
+          </button>
+        </div>
+      </div>
+
+
+      <div class="mb-3">
+        <label>Email</label>
+        <div class="d-flex align-items-center gap-2">
+          <input type="email" class="form-control" placeholder="email" disabled />
+          <button type="button" class="btn p-0 border-0 bg-transparent">
+            <img src="../assets/edit.svg" alt="edit" height="40" />
+          </button>
+        </div>
+      </div>
+
+
+      <div class="mb-3">
+        <label>Senha</label>
+        <div class="d-flex align-items-center gap-2">
+          <input type="password" class="form-control" placeholder="****************" disabled />
+          <button type="button" class="btn p-0 border-0 bg-transparent" (click)="abrirModal(modalSenha)">
+            <img src="../assets/edit.svg" alt="edit" height="40" />
+          </button>
+        </div>
+      </div>
+
+
+      <div class="d-flex justify-content-between mt-4 pt-4">
+        <button type="button" class="btn btn-outline-secondary" (click)="Voltar()">Voltar</button>
+        <button type="button" class="btn btn-primary">Sair da Conta</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- ng-templates -->
+<ng-template #modalNome>
+  <form [formGroup]="formNome" (ngSubmit)="salvarAlteracao()">
+    <div class="mb-3 gap-2" style="padding:10px;">
+
+      <label for="nome">Nome</label>
+      <div class="d-flex align-items-center mt-1">
+        <input type="text" class="form-control" id="nome" placeholder="Digite seu novo nome" formControlName="nome"
+          [class.is-invalid]="formNome.get('nome')?.invalid && formNome.get('nome')?.touched"
+          [class.is-valid]="formNome.get('nome')?.valid && formNome.get('nome')?.touched" />
+
+
+
+      </div>
+      <div *ngIf="formNome.get('nome')?.invalid && formNome.get('nome')?.touched" class="text-danger mx-1 ">
+        <small *ngIf="formNome.get('nome')?.errors?.['required']">Campo vazio</small>
+        <small *ngIf="formNome.get('nome')?.errors?.['minlength']">
+          O nome deve ter no mínimo 5 caracteres
+        </small>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary mt-3">Salvar alteração</button>
+      </div>
+    </div>
+
+  </form>
+</ng-template>
+
+<ng-template #modalSenha>
+  <form [formGroup]="formSenha" (ngSubmit)="salvarAlteracao()">
+    <div class="mb-3 gap-2" style="padding:10px;">
+
+      <label for="senha">Senha</label>
+
+      <div class="d-flex align-items-center mt-2">
+        <input type="password" class="form-control" id="senha" placeholder="Digite sua nova senha"
+          formControlName="senha"
+          [class.is-invalid]="formSenha.get('senha')?.invalid && formSenha.get('senha')?.touched"
+          [class.is-valid]="formSenha.get('senha')?.valid && formSenha.get('senha')?.touched" />
+      </div>
+
+      <div *ngIf="formSenha.get('senha')?.invalid && formSenha.get('senha')?.touched" class="text-danger mx-2">
+        <small *ngIf="formSenha.get('senha')?.errors?.['required']">Campo vazio</small>
+        <small *ngIf="formSenha.get('senha')?.errors?.['minlength']">
+          A senha deve ter no mínimo 8 caracteres
+        </small>
+      </div>
+
+      <label for="confirmeSenha" class="mt-2">Confirme sua senha</label>
+
+      <div class="d-flex align-items-center mt-1">
+        <input type="password" class="form-control" id="confirmeSenha" placeholder="Confirme sua nova senha"
+          formControlName="confirmeSenha"
+          [class.is-invalid]="formSenha.hasError('senhasDiferentes') && formSenha.get('confirmeSenha')?.touched"
+          [class.is-valid]="!formSenha.hasError('senhasDiferentes') && formSenha.get('confirmeSenha')?.touched " />
+      </div>
+
+      <div *ngIf="formSenha.hasError('senhasDiferentes') && formSenha.get('confirmeSenha')?.touched"
+        class="text-danger mx-2">
+        <small>
+          As senhas devem coincidir
+        </small>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary mt-3">Salvar alteração</button>
+      </div>
+    </div>
+
+  </form>
+</ng-template>
