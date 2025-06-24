@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './logo-side-layer.component.html',
-  styleUrl: './logo-side-layer.component.css'
+  styleUrls: ['./logo-side-layer.component.css'] 
 })
-export class LogoSideLayerComponent {
-
-}
+export class LogoSideLayerComponent {}
