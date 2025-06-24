@@ -28,7 +28,9 @@ export class CadastroComponent {
       confirmar: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
-
+voltarParaLogin() {
+  this.router.navigate(['/login']);
+}
   onInputChange() {
     this.passwordMatchError = '';
   }

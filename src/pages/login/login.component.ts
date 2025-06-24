@@ -42,33 +42,34 @@ export class LoginComponent implements OnInit {
   goToCadastro() {
     this.router.navigate(['/cadastro']);
   }
+  goToEsqueceu(){
+    this.router.navigate(['/esqueceu-senha'])
+  }
 
   async onSubmit() {
-    this.loginInvalido = '';
-    this.validated = false;
+  this.validated = true;
+  this.loginInvalido = '';
 
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      this.validated = true;
-      return;
-    }
-
-    const data = this.form.value;
-
-    try {
-      const logado = await firstValueFrom(this.auth.login(data));
-      this.router.navigate(['/']);
-    } catch (error: any) {
-      if (error.status === 401) {
-        this.loginInvalido = 'Email ou senha incorreto.';
-      } else {
-        this.loginInvalido = 'Erro ao tentar fazer login.';
-      }
-      console.error('Erro no login:', error);
-    }
+  if (this.form.invalid) {
+    this.form.markAllAsTouched();
+    this.loginInvalido = 'Por favor, corrija os campos em vermelho.';
+    return;
   }
+  const data = this.form.value;
 
-  onInputChange() {
-    this.loginInvalido = '';
+  try {
+    const logado = await firstValueFrom(this.auth.login(data));
+    this.router.navigate(['/']);
+  } catch (error: any) {
+    if (error.status === 401) {
+      this.loginInvalido = 'Email ou senha incorretos.';
+    } else {
+      this.loginInvalido = 'Erro ao tentar fazer login.';
+    }
+    console.error('Erro no login:', error);
   }
 }
+
+onInputChange() {
+  this.loginInvalido = '';
+}}

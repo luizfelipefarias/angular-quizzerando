@@ -33,6 +33,9 @@ export class EsqueceuSenhaComponent {
     });
   }
 
+  goToLogin(){
+    this.router.navigate(['/login'])
+  }
   onSubmit(modalContent: any) {
     this.validated = true;
     this.errorMessage = '';

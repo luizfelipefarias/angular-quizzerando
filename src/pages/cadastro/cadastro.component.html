@@ -80,8 +80,9 @@
         </div>
 
         <div class="d-flex justify-content-between mt-2 pt-4">
-          <button type="button" class="btn btn-outline-secondary" routerLink="/login">Voltar</button>
-          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Cadastrar</button>
+
+          <button type="button" class="btn btn-outline-secondary" routerLink="/login" (click)="voltarParaLogin()">Voltar</button>
+          <button type="submit" class="btn btn-primary" >Cadastrar</button>
         </div>
 
       </form>

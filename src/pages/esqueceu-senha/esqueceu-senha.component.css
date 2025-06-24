@@ -1,0 +1,14 @@
+.main {
+    margin: 0;
+    padding: 0 !important;
+    height: 100vh;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.body {
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
