@@ -1,0 +1,16 @@
+<ng-template #content let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="d()"></button>
+	</div>
+	<div class="modal-body">
+		<ng-content></ng-content>
+	</div>
+
+	<div class="modal-footer" *ngIf="!!secondaryBtnText || !!primaryBtnText">
+		<button type="button" class="btn btn-outline-secondary rounded-pill" (click)="d()" *ngIf="!!secondaryBtnText">{{secondaryBtnText}}</button>
+		<button type="submit" class="btn btn-primary rounded-pill" (click)="c()" *ngIf="!!primaryBtnText">{{primaryBtnText}}</button>
+	</div>
+</ng-template>
+
+<button class="btn btn-primary rounded-pill fw-medium" (click)="open(content)" [innerHTML]="btnText"></button>

@@ -1,1 +1,53 @@
-<p>criar-quiz works!</p>
+<div class="col-11 col-md-10 mx-auto my-4 py-4">
+    <h2>Criar Quiz</h2>
+    <p>Adicione perguntas e respostas ao seu quiz e em seguida salve-o.</p>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="card col-11 col-sm-10 col-md-8 col-lg-7 col-xl-6 mx-auto p-4 order-1 rounded-4 bg-light mb-4">
+            <h5>Quiz</h5>
+            <span class="text-black-50">Informações do quiz</span>
+            <hr>
+            <form action="">
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        <h6>Título do quiz</h6>
+                    </label>
+                    <input type="text" name="titulo" class="form-control rounded-pill" placeholder="Adicione um titulo"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        <h6>Descrição do quiz</h6>
+                    </label>
+                    <textarea name="descricao" class="form-control rounded-4" rows="3" required></textarea>
+                </div>
+
+                <h6>Categoria do quiz</h6>
+                <select name="categoria" class="form-select rounded-pill" aria-label="Selecione uma categoria" required>
+                    <option value="">Selecione uma opção</option>
+                    <!-- As opções seriam geradas dinamicamente no backend -->
+                    <option value="categoria1">Categoria 1</option>
+                    <option value="categoria2">Categoria 2</option>
+                    <option value="categoria3">Categoria 3</option>
+                </select>
+
+            </form>
+
+            <app-modal [btnText]="'+ Adicionar Pergunta'" [primaryBtnText]="'Salvar'">
+                
+            </app-modal>
+        </div>
+
+        <div class="card col-11 col-sm-10 col-md-8 col-lg-4 col-xl- mx-auto p-4 order-2 rounded-4 bg-light">
+            <h5>Perguntas</h5>
+            <span class="text-black-50">Lista de perguntas</span>
+            <hr>
+
+        </div>
+    </div>
+</div>
