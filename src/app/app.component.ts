@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { HeaderComponent } from '../components/header/header.component';
+import { AuthService } from '../contexts/authContexts';
 
 @Component({
   selector: 'app-root',
@@ -22,15 +23,9 @@ import { HeaderComponent } from '../components/header/header.component';
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
-    MatToolbarModule,
-    MatIconModule,
     MatButtonModule,
-    MatMenuModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatSidenavModule,
     HeaderComponent,
-    MatIconModule,
     MatListModule
   ],
   templateUrl: './app.component.html',
@@ -42,5 +37,14 @@ export class AppComponent {
   isMenuOpen: boolean = false;
   isAuthenticated: boolean = true;
 
+  constructor(private authService: AuthService){
+    
+  }
+
+  ngOnInit(){
+    this.authService.token$.subscribe(token => {
+    this.isAuthenticated = !!token;
+  });
+  }
   
 }

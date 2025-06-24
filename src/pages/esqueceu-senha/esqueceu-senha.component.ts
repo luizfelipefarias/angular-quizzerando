@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { LogoSideLayerComponent } from '../../components/logo-side-layer/logo-side-layer.component';
 
 
 // Importar do ng-bootstrap
@@ -13,7 +14,7 @@ const API_URL = '';
 @Component({
   selector: 'app-esqueceu-senha',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, NgbModalModule],
+  imports: [ReactiveFormsModule, CommonModule, NgbModalModule, LogoSideLayerComponent],
   templateUrl: './esqueceu-senha.component.html',
   styleUrls: ['./esqueceu-senha.component.css']
 })

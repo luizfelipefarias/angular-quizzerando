@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../contexts/authContexts';
+import { LogoSideLayerComponent } from '../../components/logo-side-layer/logo-side-layer.component';
 
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, LogoSideLayerComponent],
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.css']
 })

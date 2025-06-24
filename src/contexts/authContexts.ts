@@ -36,6 +36,7 @@ export class AuthService {
           this.roleSubject.next(response.role);
           this.userIdSubject.next(response.id);
           this.userInfoSubject.next(JSON.stringify(response.userInfo || {}));
+          
         }
       })
     );

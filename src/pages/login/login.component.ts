@@ -5,13 +5,14 @@ import { AuthService } from '../../contexts/authContexts';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Title } from '@angular/platform-browser';
+import { LogoSideLayerComponent } from '../../components/logo-side-layer/logo-side-layer.component';
 
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, LogoSideLayerComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']  // aqui corrigido
 })
