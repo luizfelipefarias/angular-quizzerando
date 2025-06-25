@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router, RouterLink, RouterModule } from '@angular/router';
-import { AuthService } from '../../contexts/authContexts';
+import { AuthService } from '../../app/services/contexts/authContexts';
 import { Quiz, QuizzesService } from '../../app/services/quizzes.service';
 import { CommonModule } from '@angular/common';
 
@@ -31,10 +31,10 @@ export class QuizCardComponent implements OnInit {
   }
 
   openDeleteModal() {
-   
+
   }
 
   handleDelete() {
-    
+
   }
 }

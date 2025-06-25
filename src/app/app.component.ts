@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { HeaderComponent } from '../components/header/header.component';
-import { AuthService } from '../contexts/authContexts';
+import { AuthService } from './services/contexts/authContexts';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +38,7 @@ export class AppComponent {
   isAuthenticated: boolean = true;
 
   constructor(private authService: AuthService){
-    
+
   }
 
   ngOnInit(){
@@ -46,5 +46,5 @@ export class AppComponent {
     this.isAuthenticated = !!token;
   });
   }
-  
+
 }

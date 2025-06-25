@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ModalComponent } from '../../components/modal/modal.component';
-import { AlternativaIncorretaComponent } from '../../components/alternativa-incorreta/alternativa-incorreta.component';
 import { FormsModule } from '@angular/forms';
 import CategoriasIcons from '../../../src/assets/categoriasIcons.json'
 
@@ -10,7 +9,7 @@ import CategoriasIcons from '../../../src/assets/categoriasIcons.json'
 @Component({
   selector: 'app-criar-quiz',
   standalone: true,
-  imports: [CommonModule, ModalComponent, AlternativaIncorretaComponent, FormsModule],
+  imports: [CommonModule, ModalComponent, FormsModule],
   templateUrl: './criar-quiz.component.html',
   styleUrl: './criar-quiz.component.css'
 })

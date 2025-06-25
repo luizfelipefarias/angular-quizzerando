@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../contexts/authContexts';
+import { AuthService } from '../../app/services/contexts/authContexts';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Title } from '@angular/platform-browser';
