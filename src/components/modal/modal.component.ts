@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbModal, NgbModalConfig, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -13,7 +13,9 @@ export class ModalComponent {
   @Input() btnText: string = '';
   @Input() primaryBtnText: string | undefined = undefined;
   @Input() secondaryBtnText: string | undefined = undefined;
+  @Input() formId: string = '';
 
+  @Output() emmiter = new EventEmitter<void>();
   constructor(
 		config: NgbModalConfig,
 		private modalService: NgbModal,
@@ -26,4 +28,9 @@ export class ModalComponent {
 	open(content: any) {
 		this.modalService.open(content);
 	}
+
+  onClick(){
+    console.log(1)
+    this.emmiter.emit();
+  }
 }

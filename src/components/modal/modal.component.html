@@ -1,7 +1,7 @@
 <ng-template #content let-c="close" let-d="dismiss">
 	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="d()"></button>
+		<h4 class="modal-title" id="modal-basic-title">Adicionar Quiz</h4>
+		<button type="button" class="btn-close" (click)="d()"></button>
 	</div>
 	<div class="modal-body">
 		<ng-content></ng-content>
@@ -9,7 +9,7 @@
 
 	<div class="modal-footer" *ngIf="!!secondaryBtnText || !!primaryBtnText">
 		<button type="button" class="btn btn-outline-secondary rounded-pill" (click)="d()" *ngIf="!!secondaryBtnText">{{secondaryBtnText}}</button>
-		<button type="submit" class="btn btn-primary rounded-pill" (click)="c()" *ngIf="!!primaryBtnText">{{primaryBtnText}}</button>
+		<button type="submit" class="btn btn-primary rounded-pill" ngbAutofocus (click)="onClick()" *ngIf="!!primaryBtnText" form="formId">{{primaryBtnText}}</button>
 	</div>
 </ng-template>
 
