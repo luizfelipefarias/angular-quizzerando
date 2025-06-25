@@ -1,7 +1,7 @@
 import { Component, TemplateRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
-import { FormGroup, FormControl, Validators,AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -15,71 +15,106 @@ import { Router } from '@angular/router';
 })
 export class PerfilComponent {
 
-    constructor(
-      private dialog: MatDialog,
-      private serviceTitle: Title,
-      private router:Router
-    ){ this.serviceTitle.setTitle('Meu Perfil')}
-    
+  constructor(
+    private dialog: MatDialog,
+    private serviceTitle: Title,
+    private router: Router
+  ) { this.serviceTitle.setTitle('Meu Perfil') }
 
 
-    formNome = new FormGroup({
-      nome: new FormControl('', [Validators.required, Validators.minLength(5)])
-    })
 
-    formSenha = new FormGroup({
-      senha: new FormControl('', [Validators.required, Validators.minLength(8)]),
-      confirmeSenha: new FormControl('', [Validators.required, Validators.minLength(8)]),
+  formNome = new FormGroup({
+    nome: new FormControl('', [Validators.required, Validators.minLength(5)])
+  })
 
-    },this.senhasIguaisValidator)
+  formSenha = new FormGroup({
+    senha: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    confirmeSenha: new FormControl('', [Validators.required, Validators.minLength(8)]),
 
+  }, this.senhasIguaisValidator)
 
-    Voltar(){
-      this.router.navigate(['/']);
-    }
+  formEmail = new FormGroup({
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+    ])
+  },this.emailRegistradoValidator)
 
-    abrirModal(templateRef:TemplateRef<any>){
-      const dialogRef=this.dialog.open(templateRef,{
-        width:'400px',   
-      });
+  Voltar() {
+    this.router.navigate(['/']);
+  }
+
+  modalAtual: 'nome' | 'email' | 'senha' | null = null;
+
+  abrirModal(templateRef: TemplateRef<any>, tipo: 'nome' | 'email' | 'senha') {
+
+    this.modalAtual=tipo;
+
+    const dialogRef = this.dialog.open(templateRef, {
+      width: '400px',
+    });
+
+    //remover o foco do botão para sumir o alert do console
+    (document.activeElement as HTMLElement)?.blur();
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.formNome.reset();
+      this.formSenha.reset();
+      this.formEmail.reset();
+      this.formEnviado=false;
       
-      //remover o foco do botão para sumir o alert do console
-      (document.activeElement as HTMLElement)?.blur();
-
-      dialogRef.afterClosed().subscribe(()=>{
-        this.formNome.reset();
-        this.formSenha.reset();
-      })
-    }
-    senhasIguaisValidator(group: AbstractControl): ValidationErrors | null {
+    })
+  }
+  senhasIguaisValidator(group: AbstractControl): ValidationErrors | null {
     const senha = group.get('senha')?.value;
     const confirma = group.get('confirmeSenha')?.value;
 
-    if (!senha || !confirma) return null; // enquanto digita
-
+    if (!senha || !confirma){
+      return null; // enquanto digita
+    }
     return senha === confirma ? null : { senhasDiferentes: true };
   }
-   
-    salvarAlteracao(){
 
-      console.log("oia")
-      if (this.formNome.valid){
-        const nomeDigitado = this.formNome.get('nome')?.value;
-        console.log("Nome salvo:",nomeDigitado);
+  formEnviado=false;
 
-        //espaço para o back
-        this.formNome.reset()
-      
+  emailRegistradoValidator(group: AbstractControl): ValidationErrors | null{
+    const email = group.get('email')?.value;
+    //verifica no back
+    const res = 'usuariocadastrado@gmail.com';
+    //
+    //outra opcao:
+    // if(res){
+    //   return {emailRegistrado:true}
+    // }
 
+    return email===res ? {emailRegistrado:true} : null
+  }
 
-      }
-      else if(this.formSenha.valid){
-        console.log(this.formSenha.value);
-      }
-      else{
-        console.log("Formulario Inválido");
-        this.formNome.markAllAsTouched();
+  salvarAlteracao() {
+    this.formEnviado = true;
+
+    if (this.modalAtual==='nome') {
+      if(this.formNome.invalid){
+      this.formNome.markAllAsTouched(); 
+      return;
       }
     }
-   
+    else if (this.modalAtual==='senha') {
+      if(this.formSenha.invalid){
+      this.formSenha.markAllAsTouched(); 
+      return;
+      }
+    }
+    else if (this.modalAtual==='email') {
+      if(this.formEmail.invalid){
+      this.formEmail.markAllAsTouched(); 
+      return;
+      }
+    }
+    console.log('funfou')
+    //chamadas do back e etc
+    this.dialog.closeAll();
+  }
+  
+
 }

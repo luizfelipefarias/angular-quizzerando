@@ -8,7 +8,7 @@
         <label>Nome</label>
         <div class="d-flex align-items-center gap-2">
           <input type="text" class="form-control" placeholder="nome" disabled />
-          <button type="button" class="btn p-0 border-0 bg-transparent" (click)="abrirModal(modalNome)">
+          <button type="button" class="btn p-0 border-0 bg-transparent" (click)="abrirModal(modalNome,'nome')">
             <img src="../assets/edit.svg" alt="edit" height="40" />
           </button>
         </div>
@@ -19,7 +19,7 @@
         <label>Email</label>
         <div class="d-flex align-items-center gap-2">
           <input type="email" class="form-control" placeholder="email" disabled />
-          <button type="button" class="btn p-0 border-0 bg-transparent">
+          <button type="button" class="btn p-0 border-0 bg-transparent" (click)="abrirModal(modalEmail,'email')">
             <img src="../assets/edit.svg" alt="edit" height="40" />
           </button>
         </div>
@@ -30,7 +30,7 @@
         <label>Senha</label>
         <div class="d-flex align-items-center gap-2">
           <input type="password" class="form-control" placeholder="****************" disabled />
-          <button type="button" class="btn p-0 border-0 bg-transparent" (click)="abrirModal(modalSenha)">
+          <button type="button" class="btn p-0 border-0 bg-transparent" (click)="abrirModal(modalSenha,'senha')">
             <img src="../assets/edit.svg" alt="edit" height="40" />
           </button>
         </div>
@@ -39,7 +39,7 @@
 
       <div class="d-flex justify-content-between mt-4 pt-4">
         <button type="button" class="btn btn-outline-secondary" (click)="Voltar()">Voltar</button>
-        <button type="button" class="btn btn-primary">Sair da Conta</button>
+        <button type="button" class="btn btn-primary">Sair da conta</button>
       </div>
     </form>
   </div>
@@ -52,13 +52,13 @@
       <label for="nome">Nome</label>
       <div class="d-flex align-items-center mt-1">
         <input type="text" class="form-control" id="nome" placeholder="Digite seu novo nome" formControlName="nome"
-          [class.is-invalid]="formNome.get('nome')?.invalid && formNome.get('nome')?.touched"
-          [class.is-valid]="formNome.get('nome')?.valid && formNome.get('nome')?.touched" />
+          [class.is-invalid]="formNome.get('nome')?.invalid && formEnviado"
+          [class.is-valid]="formNome.get('nome')?.valid && formEnviado" />
 
 
 
       </div>
-      <div *ngIf="formNome.get('nome')?.invalid && formNome.get('nome')?.touched" class="text-danger mx-1 ">
+      <div *ngIf="formNome.get('nome')?.invalid && formEnviado" class="text-danger mx-1 ">
         <small *ngIf="formNome.get('nome')?.errors?.['required']">Campo vazio</small>
         <small *ngIf="formNome.get('nome')?.errors?.['minlength']">
           O nome deve ter no mínimo 5 caracteres
@@ -81,11 +81,11 @@
       <div class="d-flex align-items-center mt-2">
         <input type="password" class="form-control" id="senha" placeholder="Digite sua nova senha"
           formControlName="senha"
-          [class.is-invalid]="formSenha.get('senha')?.invalid && formSenha.get('senha')?.touched"
-          [class.is-valid]="formSenha.get('senha')?.valid && formSenha.get('senha')?.touched" />
+          [class.is-invalid]="formSenha.get('senha')?.invalid && formEnviado"
+          [class.is-valid]="formSenha.get('senha')?.valid && formEnviado" />
       </div>
 
-      <div *ngIf="formSenha.get('senha')?.invalid && formSenha.get('senha')?.touched" class="text-danger mx-2">
+      <div *ngIf="formSenha.get('senha')?.invalid && formEnviado" class="text-danger mx-2">
         <small *ngIf="formSenha.get('senha')?.errors?.['required']">Campo vazio</small>
         <small *ngIf="formSenha.get('senha')?.errors?.['minlength']">
           A senha deve ter no mínimo 8 caracteres
@@ -97,17 +97,47 @@
       <div class="d-flex align-items-center mt-1">
         <input type="password" class="form-control" id="confirmeSenha" placeholder="Confirme sua nova senha"
           formControlName="confirmeSenha"
-          [class.is-invalid]="formSenha.hasError('senhasDiferentes') && formSenha.get('confirmeSenha')?.touched"
-          [class.is-valid]="!formSenha.hasError('senhasDiferentes') && formSenha.get('confirmeSenha')?.touched " />
+          [class.is-invalid]="formSenha.hasError('senhasDiferentes') && formEnviado"
+          [class.is-valid]="!formSenha.hasError('senhasDiferentes') && formEnviado && formSenha.get('confirmeSenha')?.valid " />
       </div>
 
-      <div *ngIf="formSenha.hasError('senhasDiferentes') && formSenha.get('confirmeSenha')?.touched"
+      <div *ngIf="formSenha.hasError('senhasDiferentes') && formEnviado"
         class="text-danger mx-2">
         <small>
           As senhas devem coincidir
         </small>
       </div>
 
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary mt-3">Salvar alteração</button>
+      </div>
+    </div>
+
+  </form>
+</ng-template>
+
+<ng-template #modalEmail>
+  <form [formGroup]="formEmail" (ngSubmit)="salvarAlteracao()">
+    <div class="mb-3 gap-2" style="padding:10px;">
+
+      <label for="email">Email</label>
+      <div class="d-flex align-items-center mt-1">
+        <input type="text" class="form-control" id="email" placeholder="Digite seu novo email" formControlName="email"
+          [class.is-invalid]="formEmail.get('email')?.invalid && formEnviado || formEmail.hasError('emailRegistrado')"
+          [class.is-valid]="formEmail.get('email')?.valid && formEnviado && !formEmail.hasError('emailRegistrado')" />
+
+
+
+      </div>
+      <div *ngIf="formEmail.get('email')?.invalid && formEnviado || formEmail.hasError('emailRegistrado')" class="text-danger mx-1 ">
+        <small *ngIf="formEmail.get('email')?.errors?.['required']">Campo vazio</small>
+        <small *ngIf="formEmail.get('email')?.errors?.['pattern']">
+          Formato de email fora do padrão
+        </small>
+        <small *ngIf="formEmail.hasError('emailRegistrado')">
+          O email digitado já está cadastrado
+        </small>
+      </div>
       <div class="d-flex justify-content-center">
         <button type="submit" class="btn btn-primary mt-3">Salvar alteração</button>
       </div>
