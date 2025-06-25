@@ -28,19 +28,68 @@
                 </div>
 
                 <h6>Categoria do quiz</h6>
-                <select name="categoria" class="form-select rounded-pill" aria-label="Selecione uma categoria" required>
+                <select name="categoria" class="form-select rounded-pill mb-3" aria-label="Selecione uma categoria" required>
                     <option value="">Selecione uma opção</option>
-                    <!-- As opções seriam geradas dinamicamente no backend -->
-                    <option value="categoria1">Categoria 1</option>
-                    <option value="categoria2">Categoria 2</option>
-                    <option value="categoria3">Categoria 3</option>
+                    <option value="cat" *ngFor="let cat of getCategoriasKeys()">{{cat}}</option>
                 </select>
-
             </form>
 
-            <app-modal [btnText]="'+ Adicionar Pergunta'" [primaryBtnText]="'Salvar'">
-                
-            </app-modal>
+            <!-- modal -->
+            <div class="d-flex justify-content-center pt-4">
+                <app-modal [btnText]="'+ Adicionar Pergunta'" (emmiter)="handleCadastroPerguntas(formData)"
+                    [primaryBtnText]="'Salvar'" [formId]="'formCadastroPerguntas'">
+                    <form #formData="ngForm" [id]="'formCadastroPerguntas'" [class.was-validated]="validated"
+                        novalidate>
+                        <span id="msgErroPerguntas"></span>
+
+                        <div class="mb-3">
+                            <label class="fw-medium">Insira o enunciado da pergunta</label>
+                            <textarea class="form-control" name="enunciado" rows="4" required
+                                [(ngModel)]="modelo.enunciado" autofocus></textarea>
+                        </div>
+
+                        <h5>Alternativa correta</h5>
+                        <div class="d-flex align-items-center gap-2 mb-3 text-success fs-5">
+                            <label>1.</label>
+                            <input type="text" class="form-control border-2 border-success rounded-pill"
+                                name="respCorreta" placeholder="Informe a alternativa correta"
+                                [(ngModel)]="modelo.respCorreta" required>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h5>Alternativa incorreta</h5>
+                        <div class="d-flex align-items-center gap-2 mb-3 text-danger fs-5">
+                            <label>2.</label>
+                            <input type="text" class="form-control border-2 border-danger rounded-pill"
+                                name="alternativa1" placeholder="Informe uma alternativa incorreta"
+                                [(ngModel)]="modelo.alternativa1" required>
+                        </div>
+
+                        <div *ngFor="let alt of altsIncorretas; let index = index">
+                            <div class="d-flex align-items-center gap-2 mb-3 text-danger fs-5">
+                                <label>{{index + 3}}.</label>
+                                <input type="text" class="form-control border-2 border-danger rounded-pill"
+                                    name="alternativa{{index+2}}" placeholder="Informe uma alternativa incorreta"
+                                    [(ngModel)]="modelo['alternativa' + (index + 2)]" required>
+                                <i class="fa fa-trash trash-icon" (click)="removeAltIncorreta(index)"></i>
+                            </div>
+                        </div>
+
+                        <div *ngIf="altsIncorretas.length > 2" class="text-danger">
+                            Limite máximo de alternativas atingido
+                        </div>
+
+                        <div class="row">
+                            <button type="button" (click)="handleAddIconrretas()"
+                                [disabled]="altsIncorretas.length >= 3"
+                                class="btn btn-primary rounded-pill fw-medium mt-4 mx-auto col-6">
+                                <i class="fa fa-plus"></i> Alternativa incorreta
+                            </button>
+                        </div>
+                    </form>
+                </app-modal>
+            </div>
         </div>
 
         <div class="card col-11 col-sm-10 col-md-8 col-lg-4 col-xl- mx-auto p-4 order-2 rounded-4 bg-light">
@@ -48,6 +97,36 @@
             <span class="text-black-50">Lista de perguntas</span>
             <hr>
 
+            <div class="mx-auto col-12 card-container">
+
+                <!-- card de perguntas -->
+                <div *ngFor="let pergunta of perguntas; let index = index"
+                    class="card border border-2 rounded-4 p-2 my-2 col-11 mx-auto">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <h6>Pergunta {{index + 1}}</h6>
+                            <i class="fa fa-trash text-danger ms-auto trash-icon" (click)="handleDelete(index)"></i>
+                        </div>
+
+                        <div class="d-flex flex-column">
+                            <span>{{pergunta.enunciado}}</span>
+                            <span class="text-success"><i class="fa fa-check"></i> {{pergunta.respCorreta}}</span>
+                            <span class="text-danger"><i class="fa fa-times"></i> {{pergunta.alternativa1}}</span>
+                            <span *ngIf="pergunta.alternativa2" class="text-danger"><i class="fa fa-times"></i>
+                                {{pergunta.alternativa2}}</span>
+                            <span *ngIf="pergunta.alternativa3" class="text-danger"><i class="fa fa-times"></i>
+                                {{pergunta.alternativa3}}</span>
+                            <span *ngIf="pergunta.alternativa4" class="text-danger"><i class="fa fa-times"></i>
+                                {{pergunta.alternativa4}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <button class="btn btn-primary rounded-pill px-4 my-4 mx-auto fs-5 fw-medium">Salvar Quiz</button>
     </div>
 </div>
