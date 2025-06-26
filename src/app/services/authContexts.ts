@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -28,12 +28,20 @@ export class AuthService {
           localStorage.setItem('auth', response.token);
           localStorage.setItem('role', response.role);
           localStorage.setItem('user@id', response.id);
-          localStorage.setItem('userInfo', JSON.stringify(response.userInfo || {}));
+         
 
           this.tokenSubject.next(response.token);
           this.roleSubject.next(response.role);
           this.userIdSubject.next(response.id);
-          this.userInfoSubject.next(response.userInfo || {});
+          this.fetchUserInfo().subscribe({
+            next: userInfo => {
+              localStorage.setItem('userInfo', JSON.stringify(userInfo));
+              this.userInfoSubject.next(userInfo);
+            },
+            error: err => {
+              console.error('Erro ao buscar userInfo após login:', err);
+            }
+          });
         }
       })
     );
@@ -86,7 +94,10 @@ export class AuthService {
 
 
   fetchUserInfo(): Observable<any> {
-    return this.http.get<any>(`${API_URL}/usuario/${this.userId}`).pipe(
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    })
+    return this.http.get<any>(`${API_URL}/usuario/${this.userId}`,{headers}).pipe(
       tap(userInfo => {
         localStorage.setItem('userInfo', JSON.stringify(userInfo));
         this.userInfoSubject.next(userInfo);

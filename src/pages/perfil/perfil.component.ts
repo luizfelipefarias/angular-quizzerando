@@ -1,10 +1,12 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../app/services/authContexts';
+
 
 @Component({
   selector: 'app-perfil',
@@ -13,16 +15,26 @@ import { Router } from '@angular/router';
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
-export class PerfilComponent {
+export class PerfilComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
     private serviceTitle: Title,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
+    
   ) { this.serviceTitle.setTitle('Meu Perfil') }
 
-
-
+  dadosUsuario = this.authService.userInfo;
+  
+  ngOnInit(){
+    if(this.dadosUsuario){
+      this.formNome.patchValue({nome: this.dadosUsuario.nome});
+      this.formEmail.patchValue({email: this.dadosUsuario.email});
+     
+    }
+  }
+  
   formNome = new FormGroup({
     nome: new FormControl('', [Validators.required, Validators.minLength(5)])
   })
@@ -40,8 +52,12 @@ export class PerfilComponent {
     ])
   },this.emailRegistradoValidator)
 
-  Voltar() {
+  voltar() {
     this.router.navigate(['/']);
+  }
+
+  logout(){
+    this.authService.logout();
   }
 
   modalAtual: 'nome' | 'email' | 'senha' | null = null;
@@ -58,11 +74,9 @@ export class PerfilComponent {
     (document.activeElement as HTMLElement)?.blur();
 
     dialogRef.afterClosed().subscribe(() => {
-      this.formNome.reset();
-      this.formSenha.reset();
-      this.formEmail.reset();
+      
       this.formEnviado=false;
-
+      
     })
     
   }
@@ -113,8 +127,12 @@ export class PerfilComponent {
       return;
       }
     }
-    console.log('funfou')
-    //chamadas do back e etc
+    
+    
+
+    
+
+
     this.dialog.closeAll();
   }
 

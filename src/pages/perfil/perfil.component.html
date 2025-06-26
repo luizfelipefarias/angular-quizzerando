@@ -7,7 +7,7 @@
       <div class="mb-3">
         <label>Nome</label>
         <div class="d-flex align-items-center gap-2">
-          <input type="text" class="form-control" placeholder="nome" disabled />
+          <input type="text" class="form-control" [placeholder]="dadosUsuario?.nome || 'Nome' " disabled />
           <button type="button" class="btn p-0 border-0 bg-transparent" (click)="abrirModal(modalNome,'nome')">
             <img src="../assets/edit.svg" alt="edit" height="40" />
           </button>
@@ -18,7 +18,7 @@
       <div class="mb-3">
         <label>Email</label>
         <div class="d-flex align-items-center gap-2">
-          <input type="email" class="form-control" placeholder="email" disabled />
+          <input type="email" class="form-control" [placeholder]="dadosUsuario?.email || 'Email' " disabled />
           <button type="button" class="btn p-0 border-0 bg-transparent" (click)="abrirModal(modalEmail,'email')">
             <img src="../assets/edit.svg" alt="edit" height="40" />
           </button>
@@ -38,8 +38,8 @@
 
 
       <div class="d-flex justify-content-between mt-4 pt-4">
-        <button type="button" class="btn btn-outline-secondary" (click)="Voltar()">Voltar</button>
-        <button type="button" class="btn btn-primary">Sair da conta</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="voltar()">Voltar</button>
+        <button type="button" class="btn btn-primary" (click)="logout()">Sair da conta</button>
       </div>
     </form>
   </div>
