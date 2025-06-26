@@ -16,10 +16,10 @@
 
   <div class="header-right" *ngIf="!isMobile">
     <ng-container>
-      <a mat-button href="/">Home</a>
-      <a mat-button href="/historico">Histórico</a>
-      <a mat-button href="/perfil">Perfil</a>
-      <a mat-button href="/login">Sair</a>
+      <a mat-button routerLink="/">Home</a>
+      <a mat-button routerLink="/historico">Histórico</a>
+      <a mat-button routerLink="/perfil">Perfil</a>
+      <a mat-button routerLink="/login">Sair</a>
     </ng-container>
   </div>
   <button mat-icon-button (click)="alternarMenu()" *ngIf="isMobile">

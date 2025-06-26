@@ -51,7 +51,7 @@ export class PerfilComponent {
     this.modalAtual=tipo;
 
     const dialogRef = this.dialog.open(templateRef, {
-      width: '400px',
+      width: '400px'
     });
 
     //remover o foco do botão para sumir o alert do console
@@ -64,7 +64,9 @@ export class PerfilComponent {
       this.formEnviado=false;
       
     })
+    
   }
+  
   senhasIguaisValidator(group: AbstractControl): ValidationErrors | null {
     const senha = group.get('senha')?.value;
     const confirma = group.get('confirmeSenha')?.value;

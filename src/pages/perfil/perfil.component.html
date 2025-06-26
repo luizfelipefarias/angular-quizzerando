@@ -59,9 +59,9 @@
 
       </div>
       <div *ngIf="formNome.get('nome')?.invalid && formEnviado" class="text-danger mx-1 ">
-        <small *ngIf="formNome.get('nome')?.errors?.['required']">Campo vazio</small>
+        <small *ngIf="formNome.get('nome')?.errors?.['required']">Campo vazio.</small>
         <small *ngIf="formNome.get('nome')?.errors?.['minlength']">
-          O nome deve ter no mínimo 5 caracteres
+          O nome deve possuir no mínimo 5 caracteres.
         </small>
       </div>
       <div class="d-flex justify-content-center">
@@ -86,13 +86,13 @@
       </div>
 
       <div *ngIf="formSenha.get('senha')?.invalid && formEnviado" class="text-danger mx-2">
-        <small *ngIf="formSenha.get('senha')?.errors?.['required']">Campo vazio</small>
+        <small *ngIf="formSenha.get('senha')?.errors?.['required']">Campo vazio.</small>
         <small *ngIf="formSenha.get('senha')?.errors?.['minlength']">
-          A senha deve ter no mínimo 8 caracteres
+          A senha deve possuir no mínimo 8 caracteres.
         </small>
       </div>
 
-      <label for="confirmeSenha" class="mt-2">Confirme sua senha</label>
+      <label for="confirmeSenha" class="mt-2">Confirme sua senha.</label>
 
       <div class="d-flex align-items-center mt-1">
         <input type="password" class="form-control" id="confirmeSenha" placeholder="Confirme sua nova senha"
@@ -104,7 +104,7 @@
       <div *ngIf="formSenha.hasError('senhasDiferentes') && formEnviado"
         class="text-danger mx-2">
         <small>
-          As senhas devem coincidir
+          As senhas devem coincidir.
         </small>
       </div>
 
@@ -130,12 +130,12 @@
 
       </div>
       <div *ngIf="formEmail.get('email')?.invalid && formEnviado || formEmail.hasError('emailRegistrado')" class="text-danger mx-1 ">
-        <small *ngIf="formEmail.get('email')?.errors?.['required']">Campo vazio</small>
+        <small *ngIf="formEmail.get('email')?.errors?.['required']">Campo vazio.</small>
         <small *ngIf="formEmail.get('email')?.errors?.['pattern']">
-          Formato de email fora do padrão
+          Formato de email fora do padrão.
         </small>
         <small *ngIf="formEmail.hasError('emailRegistrado')">
-          O email digitado já está cadastrado
+          O email digitado já está cadastrado.
         </small>
       </div>
       <div class="d-flex justify-content-center">

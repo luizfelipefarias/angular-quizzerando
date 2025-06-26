@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -11,6 +11,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { HeaderComponent } from '../components/header/header.component';
 import { AuthService } from './services/authContexts';
+
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,8 @@ import { AuthService } from './services/authContexts';
     MatButtonModule,
     MatSidenavModule,
     HeaderComponent,
-    MatListModule
+    MatListModule,
+    RouterLink
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
