@@ -106,7 +106,16 @@ export class AuthService {
   }
 
   updateUser(data: any): Observable<any> {
-    return this.http.put<any>(`${API_URL}/usuario/${this.userId}`, data).pipe(
+    const token = localStorage.getItem('auth');
+    console.log(token) // ou sessionStorage
+
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+   
+  });
+  
+
+    return this.http.put<any>(`${API_URL}/usuario/edit/${this.userId}`, data, {headers}).pipe(
       tap(updatedInfo => {
         localStorage.setItem('userInfo', JSON.stringify(updatedInfo));
         this.userInfoSubject.next(updatedInfo);

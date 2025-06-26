@@ -1,4 +1,4 @@
-import { Component, TemplateRef, OnInit } from '@angular/core';
+import { Component, TemplateRef, OnInit,ChangeDetectorRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
@@ -21,11 +21,13 @@ export class PerfilComponent implements OnInit {
     private dialog: MatDialog,
     private serviceTitle: Title,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
     
   ) { this.serviceTitle.setTitle('Meu Perfil') }
 
   dadosUsuario = this.authService.userInfo;
+  dadosAtualizados: any=null;
   
   ngOnInit(){
     if(this.dadosUsuario){
@@ -34,7 +36,10 @@ export class PerfilComponent implements OnInit {
      
     }
   }
-  
+  carregarDados(){
+    this.formNome.patchValue({nome: this.dadosUsuario.nome});
+    this.formEmail.patchValue({email: this.dadosUsuario.email});
+  }
   formNome = new FormGroup({
     nome: new FormControl('', [Validators.required, Validators.minLength(5)])
   })
@@ -50,7 +55,7 @@ export class PerfilComponent implements OnInit {
       Validators.required,
       Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
     ])
-  },this.emailRegistradoValidator)
+  })
 
   voltar() {
     this.router.navigate(['/']);
@@ -74,7 +79,9 @@ export class PerfilComponent implements OnInit {
     (document.activeElement as HTMLElement)?.blur();
 
     dialogRef.afterClosed().subscribe(() => {
-      
+      this.formNome.patchValue({nome: this.dadosUsuario.nome});
+      this.formEmail.patchValue({email: this.dadosUsuario.email});
+      this.formSenha.reset()
       this.formEnviado=false;
       
     })
@@ -93,47 +100,61 @@ export class PerfilComponent implements OnInit {
 
   formEnviado=false;
 
-  emailRegistradoValidator(group: AbstractControl): ValidationErrors | null{
-    const email = group.get('email')?.value;
-    //verifica no back
-    const res = 'usuariocadastrado@gmail.com';
-    //
-    //outra opcao:
-    // if(res){
-    //   return {emailRegistrado:true}
-    // }
-
-    return email===res ? {emailRegistrado:true} : null
-  }
 
   salvarAlteracao() {
     this.formEnviado = true;
+
 
     if (this.modalAtual==='nome') {
       if(this.formNome.invalid){
       this.formNome.markAllAsTouched();
       return;
       }
+      this.dadosAtualizados = {nome:this.formNome.value.nome}
+      console.log(this.dadosAtualizados)
     }
     else if (this.modalAtual==='senha') {
       if(this.formSenha.invalid){
       this.formSenha.markAllAsTouched();
       return;
       }
+      this.dadosAtualizados = {senha: this.formSenha.value.senha}
     }
     else if (this.modalAtual==='email') {
       if(this.formEmail.invalid){
       this.formEmail.markAllAsTouched();
       return;
       }
+      this.dadosAtualizados = {email: this.formEmail.value.email}
     }
     
-    
+    this.authService.updateUser(this.dadosAtualizados).subscribe({
+      next: (resposta)=>{
+        console.log("Usuário atualizado com sucesso: ",resposta);
+        if(this.dadosAtualizados.nome){
+          this.dadosUsuario.nome=this.dadosAtualizados.nome
+        }
+        else if(this.dadosAtualizados.email){
+          this.dadosUsuario.email=this.dadosAtualizados.email
+        }
+        this.cdr.detectChanges();
+        console.log(this.dadosUsuario)
+        this.dadosAtualizados=null;
+        this.dialog.closeAll();
+      },
+      error: (erro)=>{
+        if (erro.status === 500 && this.modalAtual === 'email') {
+        this.formEmail.setErrors({ emailRegistrado: true });
+        this.cdr.detectChanges();
+      } else {
+        console.error("Erro ao atualizar:", erro);
+      }
+      }
+    })
 
     
 
-
-    this.dialog.closeAll();
+    
   }
 
 
