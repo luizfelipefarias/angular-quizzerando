@@ -34,8 +34,6 @@ export class QuizPagesComponent {
     this.quizzesService.getQuizById(this.quizId).subscribe((data => {
       this.quiz = data;
     }));
-    
-    this.handleInitQuiz();
   }
 
   handleInitQuiz(){
