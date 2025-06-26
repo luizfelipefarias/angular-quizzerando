@@ -1,1 +1,53 @@
-<p>historico works!</p>
+<div class="d-flex flex-column row-gap-4 mt-4">
+    <!-- Stats Card -->
+    <div class=" card mb-4 shadow-sm mx-auto rounded-4 order-1 w-100" style="max-width: 900px;">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Estatísticas Gerais</h4>
+
+            <div class="text-center col-11 col-md-8 mx-auto my-4">
+                <h5 class="text-muted">Média de Acertos</h5>
+                <h4 class="fw-bold mb-3">{{mediaAcertos.toFixed(2)}}%</h4>
+                <ngb-progressbar type="{{mediaAcertos >= 70 ? 'success' : mediaAcertos >= 50 ? 'warning' : 'danger'}}"
+                    [value]="mediaAcertos" [showValue]="true" class="mb-2 pgbar">
+                    
+                </ngb-progressbar>
+            </div>
+
+            <div class="row row-gap-4 mx-1">
+                <div class="px-2 col-6 col-md-3">
+                    <div class="text-center p-3 bg-light rounded">
+                        <h3 class="text-primary">{{quizzesRespondidos}}</h3>
+                        <p class="mb-0 text-muted">Quizzes Respondidos</p>
+                    </div>
+                </div>
+
+                <div class="px-2 col-6 col-md-3">
+                    <div class="text-center p-3 bg-light rounded">
+                        <h3 class="text-primary">{{questoesRespondidas}}</h3>
+                        <p class="mb-0 text-muted">Questões Respondidas</p>
+                    </div>
+                </div>
+
+                <div class="px-2 col-6 col-md-3">
+                    <div class="text-center p-3 bg-light rounded">
+                        <h3 class="text-success">{{questoesCertas}}</h3>
+                        <p class="mb-0 text-muted">Questões Certas</p>
+                    </div>
+                </div>
+
+                <div class="px-2 col-6 col-md-3">
+                    <div class="text-center p-3 bg-light rounded">
+                        <h3 class="text-danger">{{questoesErradas}}</h3>
+                        <p class="mb-0 text-muted">Questões Erradas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Section -->
+            <app-card-historico *ngFor="let quiz of historico; let index = index" [historicoQuiz]="quiz" class="container-fluid order-3">
+            </app-card-historico>
+
+
+</div>

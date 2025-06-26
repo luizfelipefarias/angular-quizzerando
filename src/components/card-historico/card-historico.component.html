@@ -1,1 +1,42 @@
-<p>card-historico works!</p>
+<div ngbAccordion [closeOthers]="true" class="col-8 custom-accordion mx-auto rounded-4"  *ngIf="!!quiz">
+  <div ngbAccordionItem [collapsed]="true" class="rounded-4 accordion-item">
+    <h2 ngbAccordionHeader class="d-flex justify-content-between align-items-center rounded-4 accordion-header">
+      <button ngbAccordionButton class="w-100 d-flex justify-content-between align-items-center rounded-4">
+        <div class="d-flex align-items-center flex-grow-1">
+          <span class="accordion-title" row="1" col="1">
+            <i [class]="categoria[quiz.categoria]"></i>
+          </span>
+          <div class="d-flex flex-column ps-3">
+            <span class="row-1 fw-bold quiz-titulo">{{quiz.titulo}}</span>
+            <span class="row-1 col-11 col-sm-8 quiz-descricao">{{quiz.descricao}}</span>
+          </div>
+        </div>
+        <div class="d-flex flex-column mx-3">
+          <span class="text-center">Score:</span>
+          <span class="fs-4 fw-bold" 
+                [ngClass]="{
+                  'text-success': historicoQuiz.pontuacao >= 80,
+                  'text-warning': historicoQuiz.pontuacao >= 50 && historicoQuiz.pontuacao < 80,
+                  'text-danger': historicoQuiz.pontuacao < 50
+                }">
+            {{historicoQuiz.pontuacao.toFixed(2)}}
+          </span>
+        </div>
+      </button>
+    </h2>
+    <div ngbAccordionCollapse>
+      <div ngbAccordionBody>
+        <ng-template>
+          <div class="d-flex justify-content-evenly align-items-center fs-5">
+            <div class="text-success fw-bold">
+              <i class="fa fa-check-circle me-2"></i> Acertos: {{historicoQuiz.acertos}}
+            </div>
+            <div class="text-danger fw-bold">
+              <i class="fa fa-times me-2"></i> Erros: {{historicoQuiz.erros}}
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

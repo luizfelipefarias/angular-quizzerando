@@ -1,0 +1,74 @@
+.customAccordion {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+}
+
+.accordionItem {
+    border: 1px solid #e0e0e0;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.accordionItem:hover {
+    border-color: #a0a0a0;
+}
+
+.accordionHeader {
+    background-color: #f8f9fa;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.accordionHeader:hover {
+    background-color: #e9ecef;
+}
+
+.accordionTitle {
+    font-weight: 600;
+    color: #333;
+}
+
+.accordionIcon {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+    color: #555;
+}
+
+.accordionBody {
+    padding: 20px;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+}
+
+.accordionItem {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.accordionItem:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+
+.quiz_descricao{
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: fit-content;
+}
+
+.quiz_titulo{
+    display: -webkit-box;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: fit-content;
+}
