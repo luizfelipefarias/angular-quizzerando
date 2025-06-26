@@ -62,7 +62,7 @@ export class PerfilComponent {
       this.formSenha.reset();
       this.formEmail.reset();
       this.formEnviado=false;
-      
+
     })
   }
   senhasIguaisValidator(group: AbstractControl): ValidationErrors | null {
@@ -95,19 +95,19 @@ export class PerfilComponent {
 
     if (this.modalAtual==='nome') {
       if(this.formNome.invalid){
-      this.formNome.markAllAsTouched(); 
+      this.formNome.markAllAsTouched();
       return;
       }
     }
     else if (this.modalAtual==='senha') {
       if(this.formSenha.invalid){
-      this.formSenha.markAllAsTouched(); 
+      this.formSenha.markAllAsTouched();
       return;
       }
     }
     else if (this.modalAtual==='email') {
       if(this.formEmail.invalid){
-      this.formEmail.markAllAsTouched(); 
+      this.formEmail.markAllAsTouched();
       return;
       }
     }
@@ -115,6 +115,6 @@ export class PerfilComponent {
     //chamadas do back e etc
     this.dialog.closeAll();
   }
-  
+
 
 }

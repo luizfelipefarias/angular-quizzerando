@@ -4,25 +4,23 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-const API_URL = 'https://quizzerando-api.onrender.com'; // URL do backend
+const API_URL = 'https://quizzerando-api.onrender.com';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  // Subjects para armazenar o estado atual do token, role, userId e userInfo
   private tokenSubject = new BehaviorSubject<string | null>(localStorage.getItem('auth'));
   private roleSubject = new BehaviorSubject<string | null>(localStorage.getItem('role'));
   private userIdSubject = new BehaviorSubject<string | null>(localStorage.getItem('user@id'));
-  private userInfoSubject = new BehaviorSubject<string | null>(localStorage.getItem('userInfo'));
+  private userInfoSubject = new BehaviorSubject<any>(this.parseUserInfo());
 
   constructor(
     private http: HttpClient,
     private router: Router
   ) {}
 
-  // Método para fazer login. Envia dados ao backend e, se receber token, salva localmente e atualiza os subjects
+ 
   login(data: { email: string; senha: string }): Observable<any> {
     return this.http.post<any>(`${API_URL}/auth/login`, data).pipe(
       tap(response => {
@@ -35,19 +33,17 @@ export class AuthService {
           this.tokenSubject.next(response.token);
           this.roleSubject.next(response.role);
           this.userIdSubject.next(response.id);
-          this.userInfoSubject.next(JSON.stringify(response.userInfo || {}));
-          
+          this.userInfoSubject.next(response.userInfo || {});
         }
       })
     );
   }
 
-  // Método para registrar usuário (cadastro)
+
   register(data: { nome: string; email: string; senha: string }): Observable<any> {
     return this.http.post<any>(`${API_URL}/usuario/register`, data);
   }
 
-  // Logout: limpa localStorage e atualiza estados, depois redireciona para login
   logout(): void {
     localStorage.clear();
     this.tokenSubject.next(null);
@@ -57,12 +53,83 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  // Verifica se o usuário está autenticado
+
   isAuthenticated(): boolean {
-    return !!this.tokenSubject.value;
+    return !!this.token && this.hasValidToken();
   }
 
-  // Opcional: getters para observables se quiser acompanhar mudanças
+
+  hasValidToken(): boolean {
+    const token = this.token;
+    if (!token) return false;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const now = Math.floor(Date.now() / 1000);
+      return payload.exp > now;
+    } catch {
+      return false;
+    }
+  }
+
+
+  refreshToken(): Observable<any> {
+    return this.http.post<any>(`${API_URL}/auth/refresh`, {}).pipe(
+      tap(response => {
+        if (response?.token) {
+          localStorage.setItem('auth', response.token);
+          this.tokenSubject.next(response.token);
+        }
+      })
+    );
+  }
+
+
+  fetchUserInfo(): Observable<any> {
+    return this.http.get<any>(`${API_URL}/usuario/${this.userId}`).pipe(
+      tap(userInfo => {
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        this.userInfoSubject.next(userInfo);
+      })
+    );
+  }
+
+  updateUser(data: any): Observable<any> {
+    return this.http.put<any>(`${API_URL}/usuario/${this.userId}`, data).pipe(
+      tap(updatedInfo => {
+        localStorage.setItem('userInfo', JSON.stringify(updatedInfo));
+        this.userInfoSubject.next(updatedInfo);
+      })
+    );
+  }
+
+  changePassword(currentPassword: string, newPassword: string): Observable<any> {
+    return this.http.post(`${API_URL}/usuario/change-password`, {
+      id: this.userId,
+      currentPassword,
+      newPassword
+    });
+  }
+
+  deleteAccount(): Observable<any> {
+    return this.http.delete(`${API_URL}/usuario/${this.userId}`).pipe(
+      tap(() => this.logout())
+    );
+  }
+
+  getAllUsers(): Observable<any[]> {
+    return this.http.get<any[]>(`${API_URL}/admin/usuarios`);
+  }
+
+  setRole(userId: string, role: string): Observable<any> {
+    return this.http.patch(`${API_URL}/admin/usuario/${userId}/role`, { role });
+  }
+
+
+  banUser(userId: string): Observable<any> {
+    return this.http.patch(`${API_URL}/admin/usuario/${userId}/ban`, {});
+  }
+
   get token$(): Observable<string | null> {
     return this.tokenSubject.asObservable();
   }
@@ -75,11 +142,11 @@ export class AuthService {
     return this.userIdSubject.asObservable();
   }
 
-  get userInfo$(): Observable<string | null> {
+  get userInfo$(): Observable<any> {
     return this.userInfoSubject.asObservable();
   }
 
-  // Getters para pegar valor atual direto
+
   get token(): string | null {
     return this.tokenSubject.value;
   }
@@ -92,7 +159,17 @@ export class AuthService {
     return this.userIdSubject.value;
   }
 
-  get userInfo(): string | null {
+  get userInfo(): any {
     return this.userInfoSubject.value;
+  }
+
+
+  private parseUserInfo(): any {
+    const raw = localStorage.getItem('userInfo');
+    try {
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
   }
 }
