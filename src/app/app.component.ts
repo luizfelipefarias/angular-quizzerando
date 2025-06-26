@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { HeaderComponent } from '../components/header/header.component';
-import { AuthService } from './services/contexts/authContexts';
+import { AuthService } from './services/authContexts';
 
 @Component({
   selector: 'app-root',

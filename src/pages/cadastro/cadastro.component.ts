@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../app/services/contexts/authContexts';
+import { AuthService } from '../../app/services/authContexts';
 import { LogoSideLayerComponent } from '../../components/logo-side-layer/logo-side-layer.component';
 
 @Component({

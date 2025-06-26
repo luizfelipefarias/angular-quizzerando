@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Quiz, QuizzesService } from '../../app/services/quizzes.service';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../app/services/contexts/authContexts';
+import { AuthService } from '../../app/services/authContexts';
 import { QuizCardComponent } from '../../components/quiz-card/quiz-card.component';
 import CategoriasIcons from '../../../src/assets/categoriasIcons.json'
 
