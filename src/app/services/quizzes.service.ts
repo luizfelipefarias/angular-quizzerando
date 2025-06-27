@@ -48,4 +48,10 @@ export class QuizzesService {
     )});
   }
 
+  deleteQuizById(quizId: number | null): Observable<Quiz>{
+    return this.http.delete<Quiz>(`${this.url}/del/${quizId}`, {headers: new HttpHeaders(
+				{'Authorization': `Bearer ${this.token}`}
+    )});
+  }
+
 }

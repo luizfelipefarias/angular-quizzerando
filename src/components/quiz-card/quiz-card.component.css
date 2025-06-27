@@ -10,3 +10,7 @@
 a{
     text-decoration: none;
 }
+
+.del-icon{
+    cursor: pointer;
+}

@@ -1,5 +1,5 @@
 <div class="card col-12 rounded-4">
-  <div class="card-header rounded-top-4 position-relative text-truncate" style="font-size: 1rem;">
+  <div class="card-header rounded-top-4 position-relative text-truncate fw-medium" style="font-size: 1rem;">
     {{ quiz.titulo }}
   </div>
   <div class="card-body d-flex flex-wrap justify-content-between row-gap-4">
@@ -21,16 +21,16 @@
 
       <!-- Delete button -->
       <div class="text-danger">
-        <app-modal [btnModal]="btnModal" (emmiter)="'p'" [primaryBtnText]="'Excluir'" [formId]="'DeletarQuiz'">
-          <form id="DeletarQuiz"></form>
+        <app-modal [btnModal]="btnModal" (emmiter)="handleDelete(quiz.id)" [primaryBtnText]="'Excluir'" [secondaryBtnText]="'Cancelar'" [formId]="'DeletarQuiz'">
+          <form id="DeletarQuiz">
+            Tem certeza que deseja excluir o quiz? Essa ação é irreverssível.  
+          </form>
         </app-modal>
         
         <ng-template #btnModal>
-          <i class='fa fa-trash'></i> Excluir
+          <span class="del-icon" ><i class='fa fa-trash '></i> Excluir</span>
         </ng-template>
       </div>
     </div>
   </div>
 </div>
-
-<!-- Delete confirmation modal -->

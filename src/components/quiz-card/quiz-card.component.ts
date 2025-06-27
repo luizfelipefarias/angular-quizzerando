@@ -35,7 +35,10 @@ export class QuizCardComponent implements OnInit {
 
   }
 
-  handleDelete() {
-
+  handleDelete(index: number) {
+    console.log(index)
+    this.quizService.deleteQuizById(index).subscribe((data) => {
+      console.log(data)
+    })
   }
 }
