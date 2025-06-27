@@ -16,19 +16,21 @@
                     <label class="form-label">
                         <h6>Título do quiz</h6>
                     </label>
-                    <input type="text" name="titulo" class="form-control rounded-pill" placeholder="Adicione um titulo" [(value)]="quiz.titulo"
-                        required>
+                    <input type="text" name="titulo" class="form-control rounded-pill" placeholder="Adicione um titulo"
+                        [(value)]="quiz.titulo" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">
                         <h6>Descrição do quiz</h6>
                     </label>
-                    <textarea name="descricao" class="form-control rounded-4" rows="3" [(value)]="quiz.descricao" required></textarea>
+                    <textarea name="descricao" class="form-control rounded-4" rows="3" [(value)]="quiz.descricao"
+                        required></textarea>
                 </div>
 
                 <h6>Categoria do quiz</h6>
-                <select name="categoria" class="form-select rounded-pill mb-3" aria-label="Selecione uma categoria"  [(ngModel)]="quiz.categoria"  required>
+                <select name="categoria" class="form-select rounded-pill mb-3" aria-label="Selecione uma categoria"
+                    [(ngModel)]="quiz.categoria" required>
                     <option value="">Selecione uma opção</option>
                     <option [value]="cat" de *ngFor="let cat of getCategoriasKeys()">{{cat}}</option>
                 </select>
@@ -36,8 +38,13 @@
 
             <!-- modal -->
             <div class="d-flex justify-content-center pt-4">
-                <app-modal [btnModal]="btnModal" (emmiter)="handleCadastroPerguntas(formData)"
+                <app-modal #modalRef [headerModal]="headerModal" [btnModal]="btnModal" (emmiter)="handleCadastroPerguntas(formData); formData.reset()"
                     [primaryBtnText]="'Salvar'" [formId]="'formCadastroPerguntas'">
+
+                    <ng-template #headerModal>
+                        <h5>Adicionar pergunta</h5>
+                    </ng-template>
+
                     <form #formData="ngForm" [id]="'formCadastroPerguntas'" [class.was-validated]="validated"
                         novalidate>
                         <span id="msgErroPerguntas"></span>

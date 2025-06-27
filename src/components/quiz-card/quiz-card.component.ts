@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../../app/services/authContexts';
@@ -14,11 +14,13 @@ import { ModalComponent } from '../modal/modal.component';
   styleUrls: ['./quiz-card.component.css']
 })
 export class QuizCardComponent implements OnInit {
-
+  @ViewChild('modalRef') modal!: ModalComponent;
   @Input() quiz: any;
   @Input() categoriaI: string = '';
   token: string | null = '';
   role: string | null = '';
+  @Input() listaQuizzes!: Quiz[];
+  @Input() index!: number;
 
   constructor(
     private quizService: QuizzesService,
@@ -35,10 +37,12 @@ export class QuizCardComponent implements OnInit {
 
   }
 
-  handleDelete(index: number) {
-    console.log(index)
-    this.quizService.deleteQuizById(index).subscribe((data) => {
-      console.log(data)
+  handleDelete(quizId: number, index: number) {
+    console.log(quizId)
+    this.quizService.deleteQuizById(quizId).subscribe((data) => {
+      this.listaQuizzes.splice(index, 1)
+      this.modal.close()
     })
+
   }
 }

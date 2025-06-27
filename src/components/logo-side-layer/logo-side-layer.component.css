@@ -1,6 +1,6 @@
 .background {
   height: 100vh;
-  min-width: 41.6vw;
+  width: 100%;
   clip-path: ellipse(75% 100% at 23% 30%);
   animation: moveClip 5s infinite alternate;
 }

@@ -39,10 +39,13 @@
 
             <!-- modal -->
             <div class="d-flex justify-content-center pt-4">
-                <app-modal #modalRef [btnModal]="btnModal" (emmiter)="handleCadastroPerguntas(formData)"
+                <app-modal #modalRef [headerModal]="headerModal" [btnModal]="btnModal" (emmiter)="handleCadastroPerguntas(formData); formData.reset()"
                     [primaryBtnText]="'Salvar'" [formId]="'formCadastroPerguntas'">
-                    <form #formData="ngForm" [id]="'formCadastroPerguntas'" [class.was-validated]="validated"
-                        novalidate>
+                    <ng-template #headerModal>
+                        <h5>Adicionar Pergunta</h5>
+                    </ng-template>
+
+                    <form #formData="ngForm" [id]="'formCadastroPerguntas'" [class.was-validated]="validated" novalidate>
                         <span id="msgErroPerguntas"></span>
 
                         <div class="mb-3">

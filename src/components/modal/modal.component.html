@@ -1,6 +1,6 @@
-<ng-template #content let-c="close" let-d="dismiss">
+<ng-template #content  let-c="close" let-d="dismiss">
 	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Adicionar Quiz</h4>
+		<ng-container *ngTemplateOutlet="headerModal"></ng-container>
 		<button type="button" class="btn-close" (click)="d()"></button>
 	</div>
 	<div class="modal-body">
