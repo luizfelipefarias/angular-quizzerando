@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   styleUrl: './criar-quiz.component.css'
 })
 export class CriarQuizComponent {
-@ViewChild('modalRef') modal!: ModalComponent;
+  @ViewChild('modalRef') modal!: ModalComponent;
 
   protected validated: boolean = false;
   index: number = 0;

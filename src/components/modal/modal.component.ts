@@ -11,6 +11,7 @@ import { NgbModal, NgbModalConfig, NgbModalModule } from '@ng-bootstrap/ng-boots
 })
 export class ModalComponent {
   @Input() btnModal!: TemplateRef<any>;
+  @Input() headerModal!: TemplateRef<any>;
   @Input() primaryBtnText: string | undefined = undefined;
   @Input() secondaryBtnText: string | undefined = undefined;
   @Input() formId: string = '';
@@ -26,7 +27,7 @@ export class ModalComponent {
 	}
 
 	open(content: any) {
-		this.modalService.open(content);
+		this.modalService.open(content, {centered: true});
 	}
 
   close(){

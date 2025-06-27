@@ -6,7 +6,7 @@
 
 <div>
     <section class="lista-quizzes row col-11 col-sm-10 col-md-11 col-lg-12 col-xl-10 col-xxl-9 row-gap-4 my-4 pb-4 mx-auto" style="height: fit-content">
-        <app-quiz-card class="col-12 col-md-6 col-lg-4 px-2" *ngFor="let quiz of listaQuizzes" [quiz]="quiz" [categoriaI]="getIcon(quiz.categoria)">
+        <app-quiz-card [listaQuizzes]="listaQuizzes" class="col-12 col-md-6 col-lg-4 px-2" *ngFor="let quiz of listaQuizzes; let index = index" [quiz]="quiz" [categoriaI]="getIcon(quiz.categoria)" [index]="index">
         </app-quiz-card>
     </section>
 </div>

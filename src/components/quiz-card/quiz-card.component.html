@@ -21,14 +21,18 @@
 
       <!-- Delete button -->
       <div class="text-danger">
-        <app-modal [btnModal]="btnModal" (emmiter)="handleDelete(quiz.id)" [primaryBtnText]="'Excluir'" [secondaryBtnText]="'Cancelar'" [formId]="'DeletarQuiz'">
+        <app-modal #modalRef [headerModal]="headerModal" [btnModal]="btnModal" (emmiter)="handleDelete(quiz.id, index)"
+          [primaryBtnText]="'Excluir'" [secondaryBtnText]="'Cancelar'" [formId]="'DeletarQuiz'">
+          <ng-template #headerModal>
+            <h5>Excluir quiz</h5>
+          </ng-template>
           <form id="DeletarQuiz">
-            Tem certeza que deseja excluir o quiz? Essa ação é irreverssível.  
+            Tem certeza que deseja excluir o quiz? Essa ação é irreverssível.
           </form>
         </app-modal>
-        
+
         <ng-template #btnModal>
-          <span class="del-icon" ><i class='fa fa-trash '></i> Excluir</span>
+          <span class="del-icon"><i class='fa fa-trash '></i> Excluir</span>
         </ng-template>
       </div>
     </div>

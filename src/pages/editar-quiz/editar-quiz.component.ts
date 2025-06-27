@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ModalComponent } from '../../components/modal/modal.component';
@@ -15,9 +15,10 @@ import CategoriasIcons from '../../../src/assets/categoriasIcons.json'
   styleUrl: './editar-quiz.component.css'
 })
 export class EditarQuizComponent {
+  @ViewChild('modalRef') modal!: ModalComponent;
   protected quizId : string | null = '';
   protected quiz!: Quiz;
-  protected perguntas!: Pergunta[];
+  protected perguntas: any = [];
 
   protected validated: boolean = false;
   protected altsIncorretas: string[] = [];
@@ -59,10 +60,8 @@ export class EditarQuizComponent {
   }
 
   handleCadastroPerguntas(formData: any) {
-    console.log("2", formData.value)
-    this.perguntas.push(formData.value)
-    console.log(this.perguntas)
-    return false;
+    this.perguntas.push(formData.value);
+    this.modal.close();
   }
 
   handleDelete(index: number){
