@@ -9,7 +9,7 @@ import { LogoSideLayerComponent } from '../../components/logo-side-layer/logo-si
 
 // Importar do ng-bootstrap
 
-const API_URL = '';
+const API_URL = 'https://quizzerando-api.onrender.com';
 
 @Component({
   selector: 'app-esqueceu-senha',
