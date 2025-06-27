@@ -28,7 +28,8 @@
                 </div>
 
                 <h6>Categoria do quiz</h6>
-                <select name="categoria" class="form-select rounded-pill mb-3" aria-label="Selecione uma categoria" required>
+                <select name="categoria" class="form-select rounded-pill mb-3" aria-label="Selecione uma categoria"
+                    required>
                     <option value="">Selecione uma opção</option>
                     <option value="cat" *ngFor="let cat of getCategoriasKeys()">{{cat}}</option>
                 </select>
@@ -36,7 +37,7 @@
 
             <!-- modal -->
             <div class="d-flex justify-content-center pt-4">
-                <app-modal [btnText]="'+ Adicionar Pergunta'" (emmiter)="handleCadastroPerguntas(formData)"
+                <app-modal [btnModal]="btnModal" (emmiter)="handleCadastroPerguntas(formData)"
                     [primaryBtnText]="'Salvar'" [formId]="'formCadastroPerguntas'">
                     <form #formData="ngForm" [id]="'formCadastroPerguntas'" [class.was-validated]="validated"
                         novalidate>
@@ -88,6 +89,11 @@
                             </button>
                         </div>
                     </form>
+                    <ng-template #btnModal>
+                        <button class='btn btn-primary rounded-pill fw-medium mt-4 mx-auto'>
+                            <i class='fa fa-plus'></i> Adicionar Pergunta
+                        </button>
+                    </ng-template>
                 </app-modal>
             </div>
         </div>

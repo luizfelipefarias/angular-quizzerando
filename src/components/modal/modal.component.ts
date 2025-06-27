@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 import { NgbModal, NgbModalConfig, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -10,7 +10,7 @@ import { NgbModal, NgbModalConfig, NgbModalModule } from '@ng-bootstrap/ng-boots
   styleUrl: './modal.component.css'
 })
 export class ModalComponent {
-  @Input() btnText: string = '';
+  @Input() btnModal!: TemplateRef<any>;
   @Input() primaryBtnText: string | undefined = undefined;
   @Input() secondaryBtnText: string | undefined = undefined;
   @Input() formId: string = '';
