@@ -10,20 +10,22 @@ import { QuizPagesComponent } from '../pages/quiz-pages/quiz-pages.component';
 import { CriarQuizComponent } from '../pages/criar-quiz/criar-quiz.component';
 import { EditarQuizComponent } from '../pages/editar-quiz/editar-quiz.component';
 import { ResultadoQuizComponent } from '../components/resultado-quiz/resultado-quiz.component';
+import { AuthGuard } from '../auth/privateRoutes'; 
 
 export const routes: Routes = [
-    {path: 'cadastro', component: CadastroComponent},
-    {path: 'login', component: LoginComponent},
-    {path: 'esqueceu-senha', component: EsqueceuSenhaComponent},
-    
-    {path: '', component: HomeComponent},
-    {path: 'historico', component: HistoricoComponent},
-    {path: 'perfil', component: PerfilComponent},
-    {path: 'quiz/criar', component: CriarQuizComponent}, //     ESSA linha PRECISA ficar acima
-    {path: 'quiz/:id', component: QuizPagesComponent}, // <---  DESSA
-    {path: 'quiz/:id/editar', component: EditarQuizComponent},
-    {path: 'resultado', component: ResultadoQuizComponent},
-    {path: '**', component: NotFoundComponent}
+    { path: 'cadastro', component: CadastroComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'esqueceu-senha', component: EsqueceuSenhaComponent },
+
+    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'historico', component: HistoricoComponent, canActivate: [AuthGuard] },
+    { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
+    { path: 'quiz/criar', component: CriarQuizComponent, canActivate: [AuthGuard] },
+    { path: 'quiz/:id/editar', component: EditarQuizComponent, canActivate: [AuthGuard] },
+    { path: 'quiz/:id', component: QuizPagesComponent, canActivate: [AuthGuard] },
+    { path: 'resultado', component: ResultadoQuizComponent, canActivate: [AuthGuard] },
+
+    { path: '**', component: NotFoundComponent }
 ];
 
 export const API_URL = 'https://quizzerando-api.onrender.com';
