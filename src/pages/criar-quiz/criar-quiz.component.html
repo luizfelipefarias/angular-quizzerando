@@ -10,13 +10,15 @@
             <h5>Quiz</h5>
             <span class="text-black-50">Informações do quiz</span>
             <hr>
-            <form action="">
+
+            <!-- Form quiz -->
+            <form #quizFormData="ngForm" id="cadQuizForm" (ngSubmit)="handleSaveQuiz(quizFormData.value)">
 
                 <div class="mb-3">
                     <label class="form-label">
                         <h6>Título do quiz</h6>
                     </label>
-                    <input type="text" name="titulo" class="form-control rounded-pill" placeholder="Adicione um titulo"
+                    <input type="text" name="titulo" class="form-control rounded-pill" placeholder="Adicione um titulo" [(ngModel)]="modeloQuiz.titulo"
                         required>
                 </div>
 
@@ -24,20 +26,20 @@
                     <label class="form-label">
                         <h6>Descrição do quiz</h6>
                     </label>
-                    <textarea name="descricao" class="form-control rounded-4" rows="3" required></textarea>
+                    <textarea name="descricao" class="form-control rounded-4" rows="3" [(ngModel)]="modeloQuiz.descricao" required></textarea>
                 </div>
 
                 <h6>Categoria do quiz</h6>
-                <select name="categoria" class="form-select rounded-pill mb-3" aria-label="Selecione uma categoria"
+                <select name="categoria" class="form-select rounded-pill mb-3" aria-label="Selecione uma categoria" [(ngModel)]="modeloQuiz.categoria"
                     required>
                     <option value="">Selecione uma opção</option>
-                    <option value="cat" *ngFor="let cat of getCategoriasKeys()">{{cat}}</option>
+                    <option [value]="cat" *ngFor="let cat of getCategoriasKeys()">{{cat}}</option>
                 </select>
             </form>
 
             <!-- modal -->
             <div class="d-flex justify-content-center pt-4">
-                <app-modal [btnModal]="btnModal" (emmiter)="handleCadastroPerguntas(formData)"
+                <app-modal #modalRef [btnModal]="btnModal" (emmiter)="handleCadastroPerguntas(formData)"
                     [primaryBtnText]="'Salvar'" [formId]="'formCadastroPerguntas'">
                     <form #formData="ngForm" [id]="'formCadastroPerguntas'" [class.was-validated]="validated"
                         novalidate>
@@ -46,7 +48,7 @@
                         <div class="mb-3">
                             <label class="fw-medium">Insira o enunciado da pergunta</label>
                             <textarea class="form-control" name="enunciado" rows="4" required
-                                [(ngModel)]="modelo.enunciado" autofocus></textarea>
+                                [(ngModel)]="modeloPergunta.enunciado" autofocus></textarea>
                         </div>
 
                         <h5>Alternativa correta</h5>
@@ -54,7 +56,7 @@
                             <label>1.</label>
                             <input type="text" class="form-control border-2 border-success rounded-pill"
                                 name="respCorreta" placeholder="Informe a alternativa correta"
-                                [(ngModel)]="modelo.respCorreta" required>
+                                [(ngModel)]="modeloPergunta.respCorreta" required>
                         </div>
 
                         <hr class="my-4">
@@ -64,7 +66,7 @@
                             <label>2.</label>
                             <input type="text" class="form-control border-2 border-danger rounded-pill"
                                 name="alternativa1" placeholder="Informe uma alternativa incorreta"
-                                [(ngModel)]="modelo.alternativa1" required>
+                                [(ngModel)]="modeloPergunta.alternativa1" required>
                         </div>
 
                         <div *ngFor="let alt of altsIncorretas; let index = index">
@@ -72,7 +74,7 @@
                                 <label>{{index + 3}}.</label>
                                 <input type="text" class="form-control border-2 border-danger rounded-pill"
                                     name="alternativa{{index+2}}" placeholder="Informe uma alternativa incorreta"
-                                    [(ngModel)]="modelo['alternativa' + (index + 2)]" required>
+                                    [(ngModel)]="modeloPergunta['alternativa' + (index + 2)]" required>
                                 <i class="fa fa-trash trash-icon" (click)="removeAltIncorreta(index)"></i>
                             </div>
                         </div>
@@ -133,6 +135,6 @@
     </div>
 
     <div class="d-flex justify-content-center">
-        <button class="btn btn-primary rounded-pill px-4 my-4 mx-auto fs-5 fw-medium">Salvar Quiz</button>
+        <button type="submit" class="btn btn-primary rounded-pill px-4 my-4 mx-auto fs-5 fw-medium" form="cadQuizForm">Salvar Quiz</button>
     </div>
 </div>

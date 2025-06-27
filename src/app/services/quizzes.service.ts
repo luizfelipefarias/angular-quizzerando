@@ -18,6 +18,12 @@ export interface Quiz{
   perguntas: Pergunta[],
 }
 
+export interface QuizData{
+  titulo: string,
+  descricao: string,
+  categoria: string,
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -47,6 +53,24 @@ export class QuizzesService {
 				{'Authorization': `Bearer ${this.token}`}
     )});
   }
+
+  postQuiz(quiz: QuizData): Observable<any> {
+      return this.http.post(`${this.url}/cad`, quiz, {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${this.token}`,
+          'Content-Type': 'application/json'
+        })
+      });
+    }
+
+  postPerguntas(data: {pergunta: Pergunta, quizId: number}): Observable<any> {
+      return this.http.post(`${API_URL}/pergunta/cad`, data, {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${this.token}`,
+          'Content-Type': 'application/json'
+        })
+      });
+    }
 
   deleteQuizById(quizId: number | null): Observable<Quiz>{
     return this.http.delete<Quiz>(`${this.url}/del/${quizId}`, {headers: new HttpHeaders(

@@ -29,8 +29,11 @@ export class ModalComponent {
 		this.modalService.open(content);
 	}
 
+  close(){
+    this.modalService.dismissAll()
+  }
+
   onClick(){
-    console.log(1)
     this.emmiter.emit();
   }
 }

@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { FormsModule } from '@angular/forms';
 import CategoriasIcons from '../../../src/assets/categoriasIcons.json'
+import { Pergunta, QuizData, QuizzesService } from '../../app/services/quizzes.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,13 +16,20 @@ import CategoriasIcons from '../../../src/assets/categoriasIcons.json'
   styleUrl: './criar-quiz.component.css'
 })
 export class CriarQuizComponent {
+@ViewChild('modalRef') modal!: ModalComponent;
+
   protected validated: boolean = false;
   index: number = 0;
   protected altsIncorretas: string[] = [];
   protected perguntas: any = [];
   protected categorias = CategoriasIcons;
 
-  modelo: any = {
+  modeloQuiz: any = {
+    titulo: '',
+    descricao: '',
+    categoria: '',
+  } 
+  modeloPergunta: any = {
     enunciado: '',
     respCorreta: '',
     alternativa1: '',
@@ -30,7 +39,7 @@ export class CriarQuizComponent {
   };
 
 
-  constructor(private serviceTitle: Title) {
+  constructor(private serviceTitle: Title, private serviceQuiz: QuizzesService, private router: Router) {
     this.serviceTitle.setTitle('Quizzerando - Criar Quiz')
   }
 
@@ -43,10 +52,8 @@ export class CriarQuizComponent {
   }
 
   handleCadastroPerguntas(formData: any) {
-    console.log("2", formData.value)
-    this.perguntas.push(formData.value)
-    console.log(this.perguntas)
-    return false;
+    this.perguntas.push(formData.value);
+    this.modal.close();
   }
 
   handleDelete(index: number) {
@@ -56,4 +63,42 @@ export class CriarQuizComponent {
   getCategoriasKeys(): string[] {
     return Object.keys(this.categorias);
   }
+
+  handleSaveQuiz(quizData: QuizData) {
+  this.serviceQuiz.postQuiz(quizData).subscribe({
+    next: (res: any) => {
+      const quizzId = res.body?.id || res.id;  
+      if (!!quizzId) {  
+
+
+        if (!quizzId) {
+          console.error('ID do quiz não retornado pela API');
+          return;
+        }
+
+        // Cadastrando as perguntas
+        this.perguntas.forEach((pergunta: any) => {
+          const perguntaData = { ...pergunta, quizzId };
+          console.log("aaaaaa")
+          this.serviceQuiz.postPerguntas(perguntaData).subscribe({
+            next: () => {
+              console.log('Pergunta cadastrada com sucesso!');
+            },
+            error: (err: any) => {
+              console.error('Erro ao cadastrar pergunta:', err);
+            }
+          });
+        });
+
+        
+        this.router.navigate(['/']);
+      } else {
+        console.error('Falha ao cadastrar quiz:', res);
+      }
+    },
+    error: (err) => {
+      console.error('Erro ao enviar quiz:', err);
+    }
+  });
+}
 }
