@@ -49,11 +49,11 @@ export class CriarQuizComponent {
     return false;
   }
 
-  handleDelete(index: number){
+  handleDelete(index: number) {
     this.perguntas.splice(index, 1);
   }
 
   getCategoriasKeys(): string[] {
-  return Object.keys(this.categorias);
-}
+    return Object.keys(this.categorias);
+  }
 }

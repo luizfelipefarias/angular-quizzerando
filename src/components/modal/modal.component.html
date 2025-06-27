@@ -13,4 +13,6 @@
 	</div>
 </ng-template>
 
-<button class="btn btn-primary rounded-pill fw-medium" (click)="open(content)" [innerHTML]="btnText"></button>
+<div (click)="open(content)">
+	<ng-container *ngTemplateOutlet="btnModal"></ng-container>
+</div>
