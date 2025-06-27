@@ -1,2 +1,132 @@
-<p>editar-quiz works!</p>
-<code>id: {{ quizId }}</code>
+<div class="col-11 col-md-10 mx-auto my-4 py-4">
+    <h2>Criar Quiz</h2>
+    <p>Adicione perguntas e respostas ao seu quiz e em seguida salve-o.</p>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="card col-11 col-sm-10 col-md-8 col-lg-7 col-xl-6 mx-auto p-4 order-1 rounded-4 bg-light mb-4">
+            <h5>Quiz</h5>
+            <span class="text-black-50">Informações do quiz</span>
+            <hr>
+            <form action="">
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        <h6>Título do quiz</h6>
+                    </label>
+                    <input type="text" name="titulo" class="form-control rounded-pill" placeholder="Adicione um titulo" [(value)]="quiz.titulo"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        <h6>Descrição do quiz</h6>
+                    </label>
+                    <textarea name="descricao" class="form-control rounded-4" rows="3" [(value)]="quiz.descricao" required></textarea>
+                </div>
+
+                <h6>Categoria do quiz</h6>
+                <select name="categoria" class="form-select rounded-pill mb-3" aria-label="Selecione uma categoria"  [(ngModel)]="quiz.categoria"  required>
+                    <option value="">Selecione uma opção</option>
+                    <option [value]="cat" de *ngFor="let cat of getCategoriasKeys()">{{cat}}</option>
+                </select>
+            </form>
+
+            <!-- modal -->
+            <div class="d-flex justify-content-center pt-4">
+                <app-modal [btnText]="'+ Adicionar Pergunta'" (emmiter)="handleCadastroPerguntas(formData)"
+                    [primaryBtnText]="'Salvar'" [formId]="'formCadastroPerguntas'">
+                    <form #formData="ngForm" [id]="'formCadastroPerguntas'" [class.was-validated]="validated"
+                        novalidate>
+                        <span id="msgErroPerguntas"></span>
+
+                        <div class="mb-3">
+                            <label class="fw-medium">Insira o enunciado da pergunta</label>
+                            <textarea class="form-control" name="enunciado" rows="4" required
+                                [(ngModel)]="modelo.enunciado" autofocus></textarea>
+                        </div>
+
+                        <h5>Alternativa correta</h5>
+                        <div class="d-flex align-items-center gap-2 mb-3 text-success fs-5">
+                            <label>1.</label>
+                            <input type="text" class="form-control border-2 border-success rounded-pill"
+                                name="respCorreta" placeholder="Informe a alternativa correta"
+                                [(ngModel)]="modelo.respCorreta" required>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h5>Alternativa incorreta</h5>
+                        <div class="d-flex align-items-center gap-2 mb-3 text-danger fs-5">
+                            <label>2.</label>
+                            <input type="text" class="form-control border-2 border-danger rounded-pill"
+                                name="alternativa1" placeholder="Informe uma alternativa incorreta"
+                                [(ngModel)]="modelo.alternativa1" required>
+                        </div>
+
+                        <div *ngFor="let alt of altsIncorretas; let index = index">
+                            <div class="d-flex align-items-center gap-2 mb-3 text-danger fs-5">
+                                <label>{{index + 3}}.</label>
+                                <input type="text" class="form-control border-2 border-danger rounded-pill"
+                                    name="alternativa{{index+2}}" placeholder="Informe uma alternativa incorreta"
+                                    [(ngModel)]="modelo['alternativa' + (index + 2)]" required>
+                                <i class="fa fa-trash trash-icon" (click)="removeAltIncorreta(index)"></i>
+                            </div>
+                        </div>
+
+                        <div *ngIf="altsIncorretas.length > 2" class="text-danger">
+                            Limite máximo de alternativas atingido
+                        </div>
+
+                        <div class="row">
+                            <button type="button" (click)="handleAddIconrretas()"
+                                [disabled]="altsIncorretas.length >= 3"
+                                class="btn btn-primary rounded-pill fw-medium mt-4 mx-auto col-6">
+                                <i class="fa fa-plus"></i> Alternativa incorreta
+                            </button>
+                        </div>
+                    </form>
+                </app-modal>
+            </div>
+        </div>
+
+        <div class="card col-11 col-sm-10 col-md-8 col-lg-4 col-xl- mx-auto p-4 order-2 rounded-4 bg-light">
+            <h5>Perguntas</h5>
+            <span class="text-black-50">Lista de perguntas</span>
+            <hr>
+
+            <div class="mx-auto col-12 card-container">
+
+                <!-- card de perguntas -->
+                <div *ngFor="let pergunta of perguntas; let index = index"
+                    class="card border border-2 rounded-4 p-2 my-2 col-11 mx-auto">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <h6>Pergunta {{index + 1}}</h6>
+                            <i class="fa fa-trash text-danger ms-auto trash-icon" (click)="handleDelete(index)"></i>
+                        </div>
+
+                        <div class="d-flex flex-column">
+                            <span>{{pergunta.enunciado}}</span>
+                            <span class="text-success"><i class="fa fa-check"></i> {{pergunta.respCorreta}}</span>
+                            <span class="text-danger"><i class="fa fa-times"></i> {{pergunta.alternativa1}}</span>
+                            <span *ngIf="pergunta.alternativa2" class="text-danger"><i class="fa fa-times"></i>
+                                {{pergunta.alternativa2}}</span>
+                            <span *ngIf="pergunta.alternativa3" class="text-danger"><i class="fa fa-times"></i>
+                                {{pergunta.alternativa3}}</span>
+                            <span *ngIf="pergunta.alternativa4" class="text-danger"><i class="fa fa-times"></i>
+                                {{pergunta.alternativa4}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <button class="btn btn-primary rounded-pill px-4 my-4 mx-auto fs-5 fw-medium">Salvar Quiz</button>
+    </div>
+</div>

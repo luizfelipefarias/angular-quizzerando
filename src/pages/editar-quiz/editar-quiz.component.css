@@ -1,0 +1,14 @@
+.card-container{
+    overflow-y: scroll;
+    max-height: 400px;
+}
+
+.trash-icon{
+    cursor: pointer;
+}
+
+.card-quiz{
+    div{
+        width: 100%;
+    }
+}
