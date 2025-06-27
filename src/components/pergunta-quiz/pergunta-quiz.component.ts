@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Pergunta } from '../../app/services/quizzes.service';
 import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule, NgModel } from '@angular/forms';
+import { ResultadoService } from '../../app/services/resultado.service';
 
 @Component({
   selector: 'app-pergunta-quiz',
@@ -13,6 +13,8 @@ import { FormsModule, NgModel } from '@angular/forms';
 })
 export class PerguntaQuizComponent {
   @Input() perguntas: Pergunta[] = [];
+  @Input() quizzId!: string; 
+  @Input() userId!: string; 
   protected perguntasLength: number = this.perguntas.length;
   protected pergunta: Pergunta = {
     enunciado: '',
@@ -22,10 +24,14 @@ export class PerguntaQuizComponent {
     alternativa3: '',
     alternativa4: ''
   };
+  @Output() finalizarQuiz = new EventEmitter<{ acertos: number, total: number }>();
+
   protected indexPergunta: number = 0;
   protected alternativasEmbaralhadas: { valor: string, texto: string }[][] = [];
+  protected selecionadas: string[] = [];
+  protected corretas: number = 0;
   
-  
+   constructor(private resultadoService: ResultadoService) {}
   ngOnChanges(changes: SimpleChanges): void {
   if (changes['perguntas'] && this.perguntas.length > 0) {
     this.indexPergunta = 0;
@@ -56,7 +62,16 @@ export class PerguntaQuizComponent {
 
   return alternativas;
 }
-  
+  onSelecionarAlternativa(valor: string) {
+  this.selecionadas[this.indexPergunta] = valor;
+  this.atualizarCorretas();
+}
+
+  atualizarCorretas() {
+  this.corretas = this.selecionadas.filter((alt, i) => {
+    return alt === 'respCorreta';
+  }).length;
+}
 
   handleNext(){
     this.indexPergunta++;
@@ -70,7 +85,33 @@ export class PerguntaQuizComponent {
   }
 
   handleFinish(){
+    this.atualizarCorretas();
 
+    const erros = this.perguntasLength - this.corretas;
+
+    
+    const resultado = {
+      pontuacao: (this.corretas / this.perguntasLength) * 100,
+      quizzId: this.quizzId,
+      userId: this.userId,
+      acertos: this.corretas,
+      erros: erros
+    };
+
+    
+    this.resultadoService.postResultado(resultado).subscribe({
+      next: (res:any) => {
+        console.log('Resultado salvo com sucesso', res);
+       
+        this.finalizarQuiz.emit({ acertos: this.corretas, total: this.perguntasLength });
+      },
+      error: (err) => {
+        console.error('Erro ao salvar resultado', err);
+        
+        this.finalizarQuiz.emit({ acertos: this.corretas, total: this.perguntasLength });
+      }
+    });
   }
+  
 
 }

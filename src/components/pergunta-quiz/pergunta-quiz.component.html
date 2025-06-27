@@ -9,7 +9,13 @@
 
     <div *ngFor="let alt of alternativasEmbaralhadas[indexPergunta]">
         <label class="form-check-label" [for]="alt.valor">
-            <input class="form-check-input me-2" type="radio" name="alternaativas" [id]="alt.valor">
+            <input class="form-check-input me-2"
+            type="radio"
+            name="alternativas"   
+            [id]="alt.valor"
+            [value]="alt.valor"
+            (change)="onSelecionarAlternativa(alt.valor)"
+            [checked]="selecionadas[indexPergunta] === alt.valor">
             {{ alt.texto }}
         </label>
     </div>

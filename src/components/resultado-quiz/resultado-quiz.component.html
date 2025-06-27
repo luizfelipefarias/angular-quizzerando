@@ -1,20 +1,20 @@
-<div class="vh-100 d-flex flex-column justify-content-center align-items-center">
+<div class="vh-100 d-flex flex-column justify-content-center align-items-center " >
   <div class="p-4 bg-primary border-light-subtle rounded-4 d-flex flex-column justify-content-center" style="width: 23rem;">
     <h1 style="color: white">Resultado:</h1>
     <h1 style="font-size: 8.0rem; margin-top: 50px; color: white">
-        6/10
+        {{acertos}}/{{total}}
     </h1>
   </div>
 
   <div class="p-4 rounded-4 mt-4" style="width: 23rem;">
-    <button class="btn btn-primary w-100">
+    <button class="btn btn-primary w-100" (click)="tentarNovamente()">
       Tentar Novamente
     </button>
 
-    <a routerLink="/Perfil">
-      <button class="btn btn-secondary w-100 mt-3">
+    
+      <button class="btn btn-secondary w-100 mt-3" (click)="sairResultado()">
         Sair
       </button>
-    </a>
+  
   </div>
 </div>

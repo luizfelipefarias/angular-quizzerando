@@ -20,8 +20,19 @@
 
 
   <div class="w-100" *ngIf="quizStatus == 'onGoing'">
-    <app-pergunta-quiz [perguntas]="perguntas">
-    </app-pergunta-quiz>
+    <app-pergunta-quiz
+  [perguntas]="perguntas"
+  [quizzId]="quizId"
+  [userId]="userId"
+  (finalizarQuiz)="onFinalizarQuiz($event)">
+</app-pergunta-quiz>
   </div>
-
+  <div *ngIf="quizStatus === 'finalizado'" class="w-100">
+  <app-resultado-quiz
+  [acertos]="resultado.acertos"
+  [total]="resultado.total"
+  (tentarNovamenteOut)="againInitQuiz()"
+  (sairResultadoOut)="handleExit()">
+</app-resultado-quiz>
+  </div>
 </div>
