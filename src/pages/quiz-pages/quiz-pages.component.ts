@@ -24,7 +24,6 @@ export class QuizPagesComponent {
     titulo: '',
     descricao: '',
     categoria: '',
-    perguntas: []
   };
   
   protected quizStatus: string = 'toInit';

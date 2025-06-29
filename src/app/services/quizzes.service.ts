@@ -15,7 +15,7 @@ export interface Quiz{
   titulo: string,
   descricao: string,
   categoria: string,
-  perguntas: Pergunta[],
+  
 }
 
 export interface QuizData{
@@ -72,8 +72,23 @@ export class QuizzesService {
       });
     }
 
+  updateQuiz(quiz: {data: QuizData; id: string | null}): Observable<any> {
+    return this.http.put(`${this.url}/edit/${quiz.id}`, quiz.data, {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${this.token}`,
+          'Content-Type': 'application/json'
+        })
+      });
+  }
+
   deleteQuizById(quizId: number | null): Observable<Quiz>{
     return this.http.delete<Quiz>(`${this.url}/del/${quizId}`, {headers: new HttpHeaders(
+				{'Authorization': `Bearer ${this.token}`}
+    )});
+  }
+
+  deletePergunta(id: string | null): Observable<any>{
+    return this.http.delete(`${API_URL}/pergunta/del/${id}`, {headers: new HttpHeaders(
 				{'Authorization': `Bearer ${this.token}`}
     )});
   }
