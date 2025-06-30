@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 const API_URL = 'https://quizzerando-api.onrender.com';
@@ -42,20 +42,13 @@ export class AuthService {
 
           
           this.fetchUserInfo().subscribe({
-            next: (userInfo) => {
-              let userInfoFormatado = {
-            nome: userInfo.nome,
-            email: userInfo.email,
-            role: userInfo.role,
-            id: userInfo.id
-          };
-              localStorage.setItem('userInfo', JSON.stringify(userInfoFormatado));
-              this.userInfoSubject.next(userInfo);
-               // Redireciona após login bem-sucedido
+            next: (userInfoFormatado) => {
+              console.log("Dados do usuário carregado");
+             
             },
             error: (err) => {
               console.error('Erro ao buscar informações do usuário:', err);
-              this.logout(); // Limpa o localStorage em caso de erro
+              this.logout(); 
             }
           });
         }
@@ -132,23 +125,22 @@ export class AuthService {
       return throwError(() => new Error('Token não encontrado'));
     }
 
-    // Decodifica o token JWT para extrair o ID do usuário
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      const userId = payload.id; // Supondo que o payload do token contenha o ID do usuário
+      const userId = payload.id;
 
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`
       });
 
       return this.http.get<any>(`${API_URL}/usuario/${userId}`, { headers }).pipe(
-        tap(userInfo => {
-          let userInfoFormatado = {
-            nome: userInfo.nome,
-            email: userInfo.email,
-            role: userInfo.role,
-            id: userInfo.id
-          };
+        map(userInfo => ({
+          nome: userInfo.nome,
+          email: userInfo.email,
+          role: userInfo.role,
+          id: userInfo.id
+        })),
+        tap(userInfoFormatado => {
           localStorage.setItem('userInfo', JSON.stringify(userInfoFormatado));
           this.userInfoSubject.next(userInfoFormatado);
         })
@@ -203,7 +195,7 @@ export class AuthService {
   }
 
  
-  
+  //
   private parseUserInfo(): any {
     const raw = localStorage.getItem('userInfo');
     try {

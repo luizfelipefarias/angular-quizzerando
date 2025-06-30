@@ -28,7 +28,6 @@ export class PerfilComponent implements OnInit {
     this.serviceTitle.setTitle('Meu Perfil');
     this.authService.userInfo$.subscribe((userinfo) => {
       this.dadosUsuario = userinfo;
-
     })
   }
 
@@ -143,8 +142,9 @@ export class PerfilComponent implements OnInit {
           this.dadosUsuario.email = this.dadosAtualizados.email
         }
 
-
+        
         localStorage.setItem('userInfo', JSON.stringify(this.dadosUsuario))
+        
 
         this.dadosAtualizados = null;
         this.dialog.closeAll();
