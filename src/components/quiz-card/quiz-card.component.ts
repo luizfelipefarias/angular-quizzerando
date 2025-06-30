@@ -13,7 +13,7 @@ import { ModalComponent } from '../modal/modal.component';
   templateUrl: './quiz-card.component.html',
   styleUrls: ['./quiz-card.component.css']
 })
-export class QuizCardComponent implements OnInit {
+export class QuizCardComponent {
   @ViewChild('modalRef') modal!: ModalComponent;
   @Input() quiz: any;
   @Input() categoriaI: string = '';
@@ -26,11 +26,14 @@ export class QuizCardComponent implements OnInit {
     private quizService: QuizzesService,
     private authService: AuthService,
   ) {
-  }
+    this.authService.token$.subscribe((token)=>{
+     this.token =token
+    });
+  this.authService.userInfo$.subscribe((userinfo)=>{
+   this.role=userinfo.role;
+  });
 
-  ngOnInit(): void {
-    this.token = this.authService.token;
-    this.role = this.authService.role
+  
   }
 
   openDeleteModal() {
@@ -38,7 +41,7 @@ export class QuizCardComponent implements OnInit {
   }
 
   handleDelete(quizId: number, index: number) {
-    console.log(quizId)
+    
     this.quizService.deleteQuizById(quizId).subscribe((data) => {
       this.listaQuizzes.splice(index, 1)
       this.modal.close()

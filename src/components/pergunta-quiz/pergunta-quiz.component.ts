@@ -42,7 +42,7 @@ export class PerguntaQuizComponent {
         return this.embaralharAlternativas(pergunta)
       })
 
-    console.log("Alternativas embaralhadas:", this.alternativasEmbaralhadas);
+    
   }
 }
   
@@ -76,7 +76,7 @@ export class PerguntaQuizComponent {
   handleNext(){
     this.indexPergunta++;
     this.pergunta = this.perguntas[this.indexPergunta];
-    console.log(this.perguntas)
+    
   }
 
   handleGoBack(){

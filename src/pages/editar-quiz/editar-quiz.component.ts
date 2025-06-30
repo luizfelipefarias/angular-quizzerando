@@ -62,7 +62,7 @@ export class EditarQuizComponent {
     this.serviceQuiz.getPerguntasByQuizId(this.quizId).subscribe((data) =>{
       this.perguntas = data;
       this.perguntas.sort((a: any, b: any) => a.id - b.id)
-      console.log(this.perguntas)
+      
     })
   }
 

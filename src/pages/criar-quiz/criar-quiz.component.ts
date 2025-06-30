@@ -79,7 +79,7 @@ export class CriarQuizComponent {
         // Cadastrando as perguntas
         this.perguntas.forEach((pergunta: any) => {
           const perguntaData = { ...pergunta, quizzId };
-          console.log("aaaaaa")
+          
           this.serviceQuiz.postPerguntas(perguntaData).subscribe({
             next: () => {
               console.log('Pergunta cadastrada com sucesso!');

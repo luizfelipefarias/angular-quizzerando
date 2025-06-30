@@ -20,11 +20,15 @@ export class HomeComponent {
   protected role!: string | null;
 
   constructor( private titleService: Title, private quizzesService: QuizzesService, private auth: AuthService) {
+    this.auth.userInfo$.subscribe(userInfo => {
+      this.role = userInfo?.role || null;
+      
+    });
     this.titleService.setTitle('Quizzerando - Home');
   }
 
   ngOnInit(): void{
-    this.role = this.auth.role;
+   
 
     this.quizzesService.getQuizzes().subscribe((data) => {
       this.listaQuizzes = data;
