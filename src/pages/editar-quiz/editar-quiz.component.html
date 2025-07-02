@@ -112,29 +112,10 @@
 
             <div class="mx-auto col-12 card-container">
 
-                <!-- card de perguntas -->
-                <div *ngFor="let pergunta of perguntas; let index = index"
-                    class="card border border-2 rounded-4 p-2 my-2 col-11 mx-auto">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <h6>Pergunta {{index + 1}}</h6>
-                            <i class="fa fa-trash text-danger ms-auto trash-icon" (click)="handleDelete(pergunta.id, index, pergunta)"></i>
-                        </div>
-
-                        <div class="d-flex flex-column">
-                            <span>{{pergunta.enunciado}}</span>
-                            <span class="text-success"><i class="fa fa-check"></i> {{pergunta.respCorreta}}</span>
-                            <span class="text-danger"><i class="fa fa-times"></i> {{pergunta.alternativa1}}</span>
-                            <span *ngIf="pergunta.alternativa2" class="text-danger"><i class="fa fa-times"></i>
-                                {{pergunta.alternativa2}}</span>
-                            <span *ngIf="pergunta.alternativa3" class="text-danger"><i class="fa fa-times"></i>
-                                {{pergunta.alternativa3}}</span>
-                            <span *ngIf="pergunta.alternativa4" class="text-danger"><i class="fa fa-times"></i>
-                                {{pergunta.alternativa4}}</span>
-                        </div>
-                    </div>
-
+                <div *ngFor="let pergunta of perguntas; let index = index" class="card border border-2 rounded-4 p-2 my-2 col-11 mx-auto">
+                    <app-card-pergunta [pergunta]="pergunta" [index]="index" (event)="handleDelete(pergunta.id, index, pergunta)"></app-card-pergunta>
                 </div>
+                
             </div>
         </div>
     </div>

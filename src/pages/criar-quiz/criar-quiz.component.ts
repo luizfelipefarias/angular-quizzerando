@@ -6,12 +6,13 @@ import { FormsModule } from '@angular/forms';
 import CategoriasIcons from '../../../src/assets/categoriasIcons.json'
 import { Pergunta, QuizData, QuizzesService } from '../../app/services/quizzes.service';
 import { Router } from '@angular/router';
+import { CardPerguntaComponent } from '../../components/card-pergunta/card-pergunta.component';
 
 
 @Component({
   selector: 'app-criar-quiz',
   standalone: true,
-  imports: [CommonModule, ModalComponent, FormsModule],
+  imports: [CommonModule, ModalComponent, FormsModule, CardPerguntaComponent],
   templateUrl: './criar-quiz.component.html',
   styleUrl: './criar-quiz.component.css'
 })

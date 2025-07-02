@@ -6,11 +6,12 @@ import { ModalComponent } from '../../components/modal/modal.component';
 import { FormsModule } from '@angular/forms';
 import { Pergunta, Quiz, QuizData, QuizzesService } from '../../app/services/quizzes.service';
 import CategoriasIcons from '../../../src/assets/categoriasIcons.json'
+import { CardPerguntaComponent } from '../../components/card-pergunta/card-pergunta.component';
 
 @Component({
   selector: 'app-editar-quiz',
   standalone: true,
-  imports: [CommonModule, ModalComponent, FormsModule],
+  imports: [CommonModule, ModalComponent, FormsModule, CardPerguntaComponent],
   templateUrl: './editar-quiz.component.html',
   styleUrl: './editar-quiz.component.css'
 })
