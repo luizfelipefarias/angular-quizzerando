@@ -1,10 +1,13 @@
-<div class="col-11 col-md-10 mx-auto my-4 py-4">
-    <h2>Criar Quiz</h2>
-    <p>Adicione perguntas e respostas ao seu quiz e em seguida salve-o.</p>
-</div>
+<app-not-found *ngIf="role != 'admin'"></app-not-found>
 
 
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="role == 'admin'">
+
+    <div class="col-11 col-md-10 mx-auto my-4 py-4">
+        <h2>Criar Quiz</h2>
+        <p>Adicione perguntas e respostas ao seu quiz e em seguida salve-o.</p>
+    </div>
+
     <div class="row">
         <div class="card col-11 col-sm-10 col-md-8 col-lg-7 col-xl-6 mx-auto p-4 order-1 rounded-4 bg-light mb-4">
             <h5>Quiz</h5>
@@ -12,7 +15,8 @@
             <hr>
 
             <!-- Form quiz -->
-            <form #quizFormData="ngForm" id="cadQuizForm" (ngSubmit)="handleSaveQuiz(quizFormData.value,quizFormData)"[class.was-validated]="validatedCard" novalidate>
+            <form #quizFormData="ngForm" id="cadQuizForm" (ngSubmit)="handleSaveQuiz(quizFormData.value,quizFormData)"
+                [class.was-validated]="validatedCard" novalidate>
 
                 <div class="mb-3">
                     <label class="form-label">
@@ -122,10 +126,11 @@
             </div>
         </div>
     </div>
-s
+    s
     <div class="d-flex justify-content-center flex-column align-items-center">
-        <button type="submit" class="btn btn-primary rounded-pill px-4 my-2 mx-auto fs-5 fw-medium"
-            form="cadQuizForm" [disabled]="activateSaveButton<1">Salvar Quiz</button>
-        <small class="mx-auto mb-4 fs-6 text-danger" *ngIf="activateSaveButton<1" >Você precisa adicionar ao menos um pergunta para salvar o quiz.</small>
+        <button type="submit" class="btn btn-primary rounded-pill px-4 my-2 mx-auto fs-5 fw-medium" form="cadQuizForm"
+            [disabled]="activateSaveButton<1">Salvar Quiz</button>
+        <small class="mx-auto mb-4 fs-6 text-danger" *ngIf="activateSaveButton<1">Você precisa adicionar ao menos um
+            pergunta para salvar o quiz.</small>
     </div>
 </div>

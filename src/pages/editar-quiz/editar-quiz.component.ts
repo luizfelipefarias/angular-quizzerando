@@ -7,17 +7,20 @@ import { FormsModule,NgForm } from '@angular/forms';
 import { Pergunta, Quiz, QuizData, QuizzesService } from '../../app/services/quizzes.service';
 import CategoriasIcons from '../../../src/assets/categoriasIcons.json'
 import { CardPerguntaComponent } from '../../components/card-pergunta/card-pergunta.component';
+import { AuthService } from '../../app/services/authContexts';
+import { NotFoundComponent } from '../not-found/not-found.component';
 
 @Component({
   selector: 'app-editar-quiz',
   standalone: true,
-  imports: [CommonModule, ModalComponent, FormsModule, CardPerguntaComponent],
+  imports: [CommonModule, ModalComponent, FormsModule, CardPerguntaComponent, NotFoundComponent],
   templateUrl: './editar-quiz.component.html',
   styleUrl: './editar-quiz.component.css'
 })
 export class EditarQuizComponent {
   @ViewChild('modalRef') modal!: ModalComponent;
   @ViewChild('formData') formData!:NgForm;
+  protected role: string | null = null;
   protected validatedQuestion: boolean = false;
   protected validatedCard: boolean = false;
   protected activateSaveButton: number=0;
@@ -51,7 +54,7 @@ export class EditarQuizComponent {
   };
 
 
-  constructor(private route: ActivatedRoute, private serviceTitle: Title, private serviceQuiz: QuizzesService, private router: Router){
+  constructor(private route: ActivatedRoute, private serviceTitle: Title, private serviceQuiz: QuizzesService, private router: Router, private authService: AuthService){
     this.serviceTitle.setTitle('Editando - ');
   }
 
@@ -71,6 +74,10 @@ export class EditarQuizComponent {
       this.perguntas = data;
       this.perguntas.sort((a: any, b: any) => a.id - b.id)
       
+    })
+
+    this.authService.userInfo$.subscribe((data) => {
+      this.role = data.role;
     })
   }
 
