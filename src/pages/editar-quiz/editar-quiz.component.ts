@@ -68,7 +68,6 @@ export class EditarQuizComponent {
       if(data){
         this.activateSaveButton=data.length;
       }
-      console.log(this.activateSaveButton)
       this.perguntas = data;
       this.perguntas.sort((a: any, b: any) => a.id - b.id)
       
@@ -83,12 +82,7 @@ export class EditarQuizComponent {
     this.altsIncorretas = this.altsIncorretas.filter((_, i) => i !== index)
   }
   //vini alteracoes
-  activateSaveButtonIncrement(){
-    this.activateSaveButton+=1;
-  }
-  activateSaveButtonDecrement(){
-    this.activateSaveButton-=1;
-  }
+  
 
   clearFormQuestion=()=>{
     this.formData?.resetForm()
@@ -101,6 +95,7 @@ export class EditarQuizComponent {
     }
     this.perguntas.push(formData.value);
     this.perguntasToBeAdded.push(formData.value);
+    this.activateSaveButton+=1;
     this.modal.close();
     this.clearFormQuestion()
   }
@@ -109,6 +104,7 @@ export class EditarQuizComponent {
     this.perguntasToBeDeleted.push(id)
     this.perguntas.splice(index, 1);
     this.perguntasToBeAdded.filter((p: any) => p !== p)
+    this.activateSaveButton-=1;
   }
 
   handleEditQuiz(data: QuizData, id: string | null, quizFormData:NgForm){

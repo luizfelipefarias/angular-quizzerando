@@ -41,7 +41,7 @@
             <!-- modal -->
             <div class="d-flex justify-content-center pt-4">
                 <app-modal #modalRef [headerModal]="headerModal" [btnModal]="btnModal"
-                    (emmiter)="handleCadastroPerguntas(formData);activateSaveButtonIncrement()" [primaryBtnText]="'Salvar'"
+                    (emmiter)="handleCadastroPerguntas(formData)" [primaryBtnText]="'Salvar'"
                     [formId]="'formCadastroPerguntas'" [clearForm]="clearFormQuestion">
                     <ng-template #headerModal>
                         <h5>Adicionar Pergunta</h5>
@@ -116,7 +116,7 @@
                 <div *ngFor="let pergunta of perguntas; let index = index"
                     class="card border border-2 rounded-4 p-2 my-2 col-11 mx-auto">
                     <app-card-pergunta [pergunta]="pergunta" [index]="index"
-                        (event)="handleDelete(index);activateSaveButtonDecrement()"></app-card-pergunta>
+                        (event)="handleDelete(index);"></app-card-pergunta>
                 </div>
 
             </div>

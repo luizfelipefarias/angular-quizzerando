@@ -53,12 +53,7 @@ export class CriarQuizComponent {
     this.altsIncorretas = this.altsIncorretas.filter((_, i) => i !== index)
   }
   //vini alteracoes
-  activateSaveButtonIncrement(){
-    this.activateSaveButton+=1;
-  }
-  activateSaveButtonDecrement(){
-    this.activateSaveButton-=1;
-  }
+  
   clearFormQuestion=()=>{
     this.formData?.resetForm()
     this.validatedQuestion=false;
@@ -69,12 +64,14 @@ export class CriarQuizComponent {
       return;
     }
     this.perguntas.push(formData.value);
+    this.activateSaveButton+=1;
     this.modal.close();
     this.clearFormQuestion()
   }
 
   handleDelete(index: number) {
     this.perguntas.splice(index, 1);
+    this.activateSaveButton-=1
   }
   
   getCategoriasKeys(): string[] {
