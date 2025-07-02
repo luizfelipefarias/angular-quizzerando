@@ -25,7 +25,14 @@ export class ModalComponent {
 		config.backdrop = 'static';
 		config.keyboard = false;
 	}
+  @Input() clearForm?:()=>void;
 
+  closeForm(dimiss: () =>void){
+    if(this.clearForm){
+      this.clearForm()
+    }
+    dimiss();
+  }
 	open(content: any) {
 		this.modalService.open(content, {centered: true});
 	}
@@ -37,4 +44,6 @@ export class ModalComponent {
   onClick(){
     this.emmiter.emit();
   }
+
+  
 }

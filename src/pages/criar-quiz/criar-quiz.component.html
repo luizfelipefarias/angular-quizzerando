@@ -12,7 +12,7 @@
             <hr>
 
             <!-- Form quiz -->
-            <form #quizFormData="ngForm" id="cadQuizForm" (ngSubmit)="handleSaveQuiz(quizFormData.value)">
+            <form #quizFormData="ngForm" id="cadQuizForm" (ngSubmit)="handleSaveQuiz(quizFormData.value,quizFormData)"[class.was-validated]="validatedCard" novalidate>
 
                 <div class="mb-3">
                     <label class="form-label">
@@ -41,13 +41,13 @@
             <!-- modal -->
             <div class="d-flex justify-content-center pt-4">
                 <app-modal #modalRef [headerModal]="headerModal" [btnModal]="btnModal"
-                    (emmiter)="handleCadastroPerguntas(formData); formData.reset()" [primaryBtnText]="'Salvar'"
-                    [formId]="'formCadastroPerguntas'">
+                    (emmiter)="handleCadastroPerguntas(formData);activateSaveButtonIncrement()" [primaryBtnText]="'Salvar'"
+                    [formId]="'formCadastroPerguntas'" [clearForm]="clearFormQuestion">
                     <ng-template #headerModal>
                         <h5>Adicionar Pergunta</h5>
                     </ng-template>
 
-                    <form #formData="ngForm" [id]="'formCadastroPerguntas'" [class.was-validated]="validated"
+                    <form #formData="ngForm" [id]="'formCadastroPerguntas'" [class.was-validated]="validatedQuestion"
                         novalidate>
                         <span id="msgErroPerguntas"></span>
 
@@ -116,15 +116,16 @@
                 <div *ngFor="let pergunta of perguntas; let index = index"
                     class="card border border-2 rounded-4 p-2 my-2 col-11 mx-auto">
                     <app-card-pergunta [pergunta]="pergunta" [index]="index"
-                        (event)="handleDelete(index)"></app-card-pergunta>
+                        (event)="handleDelete(index);activateSaveButtonDecrement()"></app-card-pergunta>
                 </div>
 
             </div>
         </div>
     </div>
-
-    <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary rounded-pill px-4 my-4 mx-auto fs-5 fw-medium"
-            form="cadQuizForm">Salvar Quiz</button>
+s
+    <div class="d-flex justify-content-center flex-column align-items-center">
+        <button type="submit" class="btn btn-primary rounded-pill px-4 my-2 mx-auto fs-5 fw-medium"
+            form="cadQuizForm" [disabled]="activateSaveButton<1">Salvar Quiz</button>
+        <small class="mx-auto mb-4 fs-6 text-danger" *ngIf="activateSaveButton<1" >Você precisa adicionar ao menos um pergunta para salvar o quiz.</small>
     </div>
 </div>

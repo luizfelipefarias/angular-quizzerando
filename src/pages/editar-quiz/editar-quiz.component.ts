@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalComponent } from '../../components/modal/modal.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,NgForm } from '@angular/forms';
 import { Pergunta, Quiz, QuizData, QuizzesService } from '../../app/services/quizzes.service';
 import CategoriasIcons from '../../../src/assets/categoriasIcons.json'
 import { CardPerguntaComponent } from '../../components/card-pergunta/card-pergunta.component';
@@ -17,6 +17,10 @@ import { CardPerguntaComponent } from '../../components/card-pergunta/card-pergu
 })
 export class EditarQuizComponent {
   @ViewChild('modalRef') modal!: ModalComponent;
+  @ViewChild('formData') formData!:NgForm;
+  protected validatedQuestion: boolean = false;
+  protected validatedCard: boolean = false;
+  protected activateSaveButton: number=0;
   protected quizId!: string | null;
   protected quiz: Quiz = {
     titulo: '',
@@ -61,6 +65,10 @@ export class EditarQuizComponent {
     })
 
     this.serviceQuiz.getPerguntasByQuizId(this.quizId).subscribe((data) =>{
+      if(data){
+        this.activateSaveButton=data.length;
+      }
+      console.log(this.activateSaveButton)
       this.perguntas = data;
       this.perguntas.sort((a: any, b: any) => a.id - b.id)
       
@@ -74,11 +82,27 @@ export class EditarQuizComponent {
   removeAltIncorreta(index: number) {
     this.altsIncorretas = this.altsIncorretas.filter((_, i) => i !== index)
   }
+  //vini alteracoes
+  activateSaveButtonIncrement(){
+    this.activateSaveButton+=1;
+  }
+  activateSaveButtonDecrement(){
+    this.activateSaveButton-=1;
+  }
 
-  handleCadastroPerguntas(formData: any) {
+  clearFormQuestion=()=>{
+    this.formData?.resetForm()
+    this.validatedQuestion=false;
+  }
+  handleCadastroPerguntas(formData: NgForm) {
+    this.validatedQuestion=true;
+    if(formData.invalid){
+      return;
+    }
     this.perguntas.push(formData.value);
     this.perguntasToBeAdded.push(formData.value);
     this.modal.close();
+    this.clearFormQuestion()
   }
 
   handleDelete(id: number, index: number, p: any){
@@ -87,7 +111,15 @@ export class EditarQuizComponent {
     this.perguntasToBeAdded.filter((p: any) => p !== p)
   }
 
-  handleEditQuiz(data: QuizData, id: string | null){
+  handleEditQuiz(data: QuizData, id: string | null, quizFormData:NgForm){
+  this.validatedCard=true;
+  if(quizFormData.invalid){
+    return
+  }
+  this.validatedCard=false;
+  quizFormData?.resetForm();
+  this.formData?.resetForm();
+  this.activateSaveButton=0;
     this.serviceQuiz.updateQuiz({data, id}).subscribe(
       {next: (res: any) => {
         const quizzId = res.body?.id || res.id;  

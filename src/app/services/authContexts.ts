@@ -42,7 +42,7 @@ export class AuthService {
 
           
           this.fetchUserInfo().subscribe({
-            next: (userInfoFormatado) => {
+            next: () => {
               console.log("Dados do usuário carregado");
              
             },
