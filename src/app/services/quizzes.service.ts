@@ -81,6 +81,15 @@ export class QuizzesService {
       });
   }
 
+  updatePergunta(perguntaId:number, pergunta:any): Observable<any> {
+    return this.http.put(`${API_URL}/pergunta/edit/${perguntaId}`, pergunta, {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${this.token}`,
+          'Content-Type': 'application/json'
+        })
+      });
+  }
+
   deleteQuizById(quizId: number | null): Observable<Quiz>{
     return this.http.delete<Quiz>(`${this.url}/del/${quizId}`, {headers: new HttpHeaders(
 				{'Authorization': `Bearer ${this.token}`}

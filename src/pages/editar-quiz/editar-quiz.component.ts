@@ -20,6 +20,8 @@ import { NotFoundComponent } from '../not-found/not-found.component';
 export class EditarQuizComponent {
   @ViewChild('modalRef') modal!: ModalComponent;
   @ViewChild('formData') formData!:NgForm;
+  @ViewChild('formDataPergunta') formDataPergunta!:NgForm;
+
   protected role: string | null = null;
   protected validatedQuestion: boolean = false;
   protected validatedCard: boolean = false;
@@ -33,7 +35,7 @@ export class EditarQuizComponent {
   protected perguntas: any = [];
   protected perguntasToBeDeleted: number[] = [];
   protected perguntasToBeAdded: any = [];
-
+  protected perguntasToBeEdited: any = [];
 
   protected validated: boolean = false;
   protected altsIncorretas: string[] = [];
@@ -106,6 +108,9 @@ export class EditarQuizComponent {
     this.modal.close();
     this.clearFormQuestion()
   }
+  handleEditPergunta(id: number, formDataPergunta: NgForm){
+    this.perguntasToBeEdited.push({id: id, formData: formDataPergunta.value});
+  }
 
   handleDelete(id: number, index: number, p: any){
     this.perguntasToBeDeleted.push(id)
@@ -148,14 +153,14 @@ export class EditarQuizComponent {
 
           this.perguntasToBeAdded.forEach((pergunta: any) => {
             const perguntaData = { ...pergunta, quizzId };
-            this.serviceQuiz.postPerguntas(perguntaData).subscribe({
-              next: () => {
-                console.log('Pergunta cadastrada com sucesso!');
-              },
-              error: (err: any) => {
-                console.error('Erro ao cadastrar pergunta:', err);
-              }
-            });
+            this.serviceQuiz.postPerguntas(perguntaData).subscribe({});
+          });
+
+
+          this.perguntasToBeEdited.forEach((pergunta: any) => {
+            const perguntaId = pergunta.id;
+            const perguntaData = { ...pergunta.formData, idQuiz: quizzId };
+            this.serviceQuiz.updatePergunta(perguntaId, perguntaData).subscribe({});
           });
 
         }

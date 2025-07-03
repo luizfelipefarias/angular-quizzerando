@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalConfig, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -10,6 +10,7 @@ import { NgbModal, NgbModalConfig, NgbModalModule } from '@ng-bootstrap/ng-boots
   styleUrl: './modal.component.css'
 })
 export class ModalComponent {
+  @ViewChild('content') content: any;
   @Input() btnModal!: TemplateRef<any>;
   @Input() headerModal!: TemplateRef<any>;
   @Input() primaryBtnText: string | undefined = undefined;
@@ -33,8 +34,8 @@ export class ModalComponent {
     }
     dimiss();
   }
-	open(content: any) {
-		this.modalService.open(content, {centered: true});
+	open() {
+		this.modalService.open(this.content, {centered: true});
 	}
 
   close(){

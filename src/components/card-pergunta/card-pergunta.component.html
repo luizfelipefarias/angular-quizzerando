@@ -1,12 +1,17 @@
+<div class="card border border-2 rounded-4 my-2 col-11 mx-auto">
+    <div class="d-flex card-header align-items-center">
+        <h6 class="my-auto">Pergunta {{index + 1}}</h6>
+            <span class="ms-auto text-info me-3 icons" (click)="modalRef.open()">
+                <i class="fa fa-edit"></i> Editar
+            </span>
+        <span class="text-danger icons">
+            <i class="fa fa-trash " (click)="event.emit()"></i> Excluir
+        </span>
+    </div>
 
     <div class="card-body">
-        <div class="d-flex">
-            <h6>Pergunta {{index + 1}}</h6>
-            <i class="fa fa-trash text-danger ms-auto trash-icon" (click)="event.emit()"></i>
-        </div>
-
         <div class="d-flex flex-column">
-            <span>{{pergunta.enunciado}}</span>
+            <span class="mb-4 lh-sm">{{pergunta.enunciado}}</span>
             <span class="text-success"><i class="fa fa-check"></i> {{pergunta.respCorreta}}</span>
             <span class="text-danger"><i class="fa fa-times"></i> {{pergunta.alternativa1}}</span>
             <span *ngIf="pergunta.alternativa2" class="text-danger"><i class="fa fa-times"></i>
@@ -17,3 +22,64 @@
                 {{pergunta.alternativa4}}</span>
         </div>
     </div>
+
+</div>
+
+
+<app-modal #modalRef [headerModal]="headerModal" [btnModal]="btnModal" [primaryBtnText]="'Salvar'"
+    [formId]="'formEditPerguntas'" (emmiter)="handleEditPergunta(pergunta.id, formDataPergunta)" >
+
+    <ng-template #headerModal>
+        <h5>Editar pergunta</h5>
+    </ng-template>
+
+    <form #formDataPergunta="ngForm" [id]="'formEditPerguntas'" [class.was-validated]="validatedQuestion" novalidate>
+        <span id="msgErroPerguntas"></span>
+
+        <div class="mb-3">
+            <label class="fw-medium">Insira o enunciado da pergunta</label>
+            <textarea class="form-control" name="enunciado" rows="4" required [(ngModel)]="pergunta.enunciado"
+                autofocus></textarea>
+        </div>
+
+        <h5>Alternativa correta</h5>
+        <div class="d-flex align-items-center gap-2 mb-3 text-success fs-5">
+            <label>1.</label>
+            <input type="text" class="form-control border-2 border-success rounded-pill" name="respCorreta"
+                placeholder="Informe a alternativa correta" [(ngModel)]="pergunta.respCorreta" required>
+        </div>
+
+        <hr class="my-4">
+
+        <h5>Alternativa incorreta</h5>
+        <div class="d-flex align-items-center gap-2 mb-3 text-danger fs-5">
+            <label>2.</label>
+            <input type="text" class="form-control border-2 border-danger rounded-pill" name="alternativa1"
+                placeholder="Informe uma alternativa incorreta" [(ngModel)]="pergunta.alternativa1" required>
+        </div>
+
+        <div *ngFor="let alt of altsIncorretas; let index = index">
+            <div class="d-flex align-items-center gap-2 mb-3 text-danger fs-5">
+                <label>{{index + 3}}.</label>
+                <input type="text" class="form-control border-2 border-danger rounded-pill"
+                    name="alternativa{{index+2}}" placeholder="Informe uma alternativa incorreta"
+                    [(ngModel)]="pergunta['alternativa' + (index + 2)]" required>
+                <i class="fa fa-trash trash-icon" (click)="removeAltIncorreta(index)"></i>
+            </div>
+        </div>
+
+        <div *ngIf="altsIncorretas.length > 2" class="text-danger">
+            Limite máximo de alternativas atingido
+        </div>
+
+        <div class="row">
+            <button type="button" (click)="handleAddIconrretas()" [disabled]="altsIncorretas.length >= 3"
+                class="btn btn-primary rounded-pill fw-medium mt-4 mx-auto col-6">
+                <i class="fa fa-plus"></i> Alternativa incorreta
+            </button>
+        </div>
+    </form>
+
+    <ng-template #btnModal></ng-template>
+
+</app-modal>
