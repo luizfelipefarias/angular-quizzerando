@@ -1,11 +1,11 @@
 <div class="card border border-2 rounded-4 my-2 col-11 mx-auto">
     <div class="d-flex card-header align-items-center">
         <h6 class="my-auto">Pergunta {{index + 1}}</h6>
-            <span class="ms-auto text-info me-3 icons" (click)="modalRef.open()">
-                <i class="fa fa-edit"></i> Editar
-            </span>
-        <span class="text-danger icons">
-            <i class="fa fa-trash " (click)="event.emit()"></i> Excluir
+        <span class="ms-auto text-info me-3 icons" (click)="modalRef.open()">
+            <i class="fa fa-edit"></i> Editar
+        </span>
+        <span class="text-danger icons" (click)="event.emit()">
+            <i class="fa fa-trash"></i> Excluir
         </span>
     </div>
 
@@ -23,11 +23,20 @@
         </div>
     </div>
 
+    <div class="card-footer d-flex justify-content-around">
+        <h6 class="my-auto">Pergunta {{index + 1}}</h6>
+        <span class="ms-auto text-info me-3 icons" (click)="modalRef.open()">
+            <i class="fa fa-edit"></i> Editar
+        </span>
+        <span class="text-danger icons" (click)="event.emit()">
+            <i class="fa fa-trash"></i> Excluir
+        </span>
+    </div>
 </div>
 
 
 <app-modal #modalRef [headerModal]="headerModal" [btnModal]="btnModal" [primaryBtnText]="'Salvar'"
-    [formId]="'formEditPerguntas'" (emmiter)="handleEditPergunta(pergunta.id, formDataPergunta)" >
+    [formId]="'formEditPerguntas'" (emmiter)="handleEditPergunta(pergunta.id, formDataPergunta)">
 
     <ng-template #headerModal>
         <h5>Editar pergunta</h5>
@@ -38,7 +47,7 @@
 
         <div class="mb-3">
             <label class="fw-medium">Insira o enunciado da pergunta</label>
-            <textarea class="form-control" name="enunciado" rows="4" required [(ngModel)]="pergunta.enunciado"
+            <textarea class="form-control" name="enunciado" rows="4" required [(ngModel)]="modelo.enunciado"
                 autofocus></textarea>
         </div>
 
@@ -46,7 +55,7 @@
         <div class="d-flex align-items-center gap-2 mb-3 text-success fs-5">
             <label>1.</label>
             <input type="text" class="form-control border-2 border-success rounded-pill" name="respCorreta"
-                placeholder="Informe a alternativa correta" [(ngModel)]="pergunta.respCorreta" required>
+                placeholder="Informe a alternativa correta" [(ngModel)]="modelo.respCorreta" required>
         </div>
 
         <hr class="my-4">
@@ -55,18 +64,19 @@
         <div class="d-flex align-items-center gap-2 mb-3 text-danger fs-5">
             <label>2.</label>
             <input type="text" class="form-control border-2 border-danger rounded-pill" name="alternativa1"
-                placeholder="Informe uma alternativa incorreta" [(ngModel)]="pergunta.alternativa1" required>
+                placeholder="Informe uma alternativa incorreta" [(ngModel)]="modelo.alternativa1" required>
         </div>
 
         <div *ngFor="let alt of altsIncorretas; let index = index">
-            <div class="d-flex align-items-center gap-2 mb-3 text-danger fs-5">
-                <label>{{index + 3}}.</label>
-                <input type="text" class="form-control border-2 border-danger rounded-pill"
-                    name="alternativa{{index+2}}" placeholder="Informe uma alternativa incorreta"
-                    [(ngModel)]="pergunta['alternativa' + (index + 2)]" required>
-                <i class="fa fa-trash trash-icon" (click)="removeAltIncorreta(index)"></i>
-            </div>
-        </div>
+  <div *ngIf="modelo['alternativa' + (index + 2)] !== undefined" class="d-flex align-items-center gap-2 mb-3 text-danger fs-5">
+    <label>{{ index + 3 }}.</label>
+    <input type="text" class="form-control border-2 border-danger rounded-pill"
+      name="alternativa{{ index + 2 }}" placeholder="Informe uma alternativa incorreta"
+      [(ngModel)]="modelo['alternativa' + (index + 2)]" required>
+    <i class="fa fa-trash trash-icon" (click)="removeAltIncorreta(index)"></i>
+  </div>
+</div>
+
 
         <div *ngIf="altsIncorretas.length > 2" class="text-danger">
             Limite máximo de alternativas atingido

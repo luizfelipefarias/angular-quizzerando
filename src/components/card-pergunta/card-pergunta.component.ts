@@ -24,7 +24,7 @@ export class CardPerguntaComponent {
   protected validated: boolean = false;
   protected altsIncorretas: string[] = [];
 
-  @Input() modelo: any = {
+  modelo: any = {
     enunciado: '',
     respCorreta: '',
     alternativa1: '',
@@ -43,10 +43,11 @@ export class CardPerguntaComponent {
     for (let index = 0; index < alternativasIncorretas.length - 1; index++) {
       this.altsIncorretas.push('')
     }
+    this.modelo = this.pergunta
   }
 
   handleEditPergunta(id: number, formDataPergunta: NgForm) {
-    this.perguntasToBeEdited.push({ id: id, formData: formDataPergunta.value });
+    this.perguntasToBeEdited.push({ id: id, formData: this.modelo });
     this.modal.close()
   }
 
@@ -55,10 +56,20 @@ export class CardPerguntaComponent {
   }
 
   removeAltIncorreta(index: number) {
-    this.altsIncorretas = this.altsIncorretas.filter((_, i) => i !== index)
+
+  const chave = 'alternativa' + (index + 2);
+  
+  this.modelo[chave] = null; 
+  this.altsIncorretas = this.altsIncorretas.filter((_, i) => i !== index);
+
+  // Reorganiza as chaves seguintes para evitar buracos
+  for (let i = index; i < this.altsIncorretas.length; i++) {
+    const antigaChave = 'alternativa' + (i + 3);
+    const novaChave = 'alternativa' + (i + 2);
+    this.modelo[novaChave] = this.modelo[antigaChave];
+    this.modelo[antigaChave] = null;
   }
 
-  createRange(n: number): number[] {
-    return Array.from({ length: n }, (_, i) => i);
   }
+
 }
