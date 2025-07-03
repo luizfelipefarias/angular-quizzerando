@@ -12,7 +12,6 @@
         [formGroup]="form"
         (ngSubmit)="onSubmit()"
         novalidate
-        [class.was-validated]="validated"
         autocomplete="off"
       >
         <!-- campo email -->
@@ -26,15 +25,16 @@
             required
             class="form-control"
             [class.is-invalid]="
-              form.get('email')?.invalid &&
-              (form.get('email')?.touched || validated)
+              (form.get('email')?.invalid &&
+              form.get('email')?.touched && validated)||loginInvalido 
             "
+            [class.is-valid]="form.get('email')?.valid && form.get('email')?.touched && validated"
             (input)="onInputChange()"
             autocomplete="email"
           />
-          <div class="invalid-feedback">
-            Por favor, insira um email válido.
-          </div>
+          <small class="text-danger" *ngIf="!loginInvalido && form.get('email')?.touched && form.get('email')?.invalid && validated">
+            Insira um email válido.
+          </small>
         </div>
 
         <!-- campo Senha -->
@@ -48,19 +48,20 @@
             required
             class="form-control"
             [class.is-invalid]="
-              form.get('senha')?.invalid &&
-              (form.get('senha')?.touched || validated)
+              (form.get('senha')?.invalid &&
+              form.get('senha')?.touched && validated)||loginInvalido
             "
+            [class.is-valid]="form.get('senha')?.valid && form.get('senha')?.touched && validated"
             (input)="onInputChange()"
             autocomplete="current-password"
           />
-          <div class="invalid-feedback">
+          <small class="text-danger" *ngIf="!loginInvalido && form.get('senha')?.touched && form.get('senha')?.invalid && validated">
             Informe uma senha.
-          </div>
+          </small>
         </div>
 
         <!-- mensagem de erro geral -->
-        <div *ngIf="loginInvalido" class="text-danger my-0 py-0">
+        <div *ngIf="loginInvalido && form.get('senha')?.valid && form.get('senha')?.valid && validated" class="text-danger my-0 py-0">
           {{ loginInvalido }}
         </div>
 

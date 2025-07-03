@@ -83,12 +83,13 @@ export class PerfilComponent implements OnInit {
     (document.activeElement as HTMLElement)?.blur();
 
     dialogRef.afterClosed().subscribe(() => {
-      this.formNome.patchValue({ nome: this.dadosUsuario.nome });
-      this.formEmail.patchValue({ email: this.dadosUsuario.email });
-      this.formSenha.reset()
-      this.formEnviado = false;
-
-    })
+  if (this.dadosUsuario) {
+    this.formNome.patchValue({ nome: this.dadosUsuario.nome });
+    this.formEmail.patchValue({ email: this.dadosUsuario.email });
+  }
+  this.formSenha.reset();
+  this.formEnviado = false;
+});
 
   }
 
@@ -141,6 +142,7 @@ export class PerfilComponent implements OnInit {
         else if (this.dadosAtualizados.email) {
           this.dadosUsuario.email = this.dadosAtualizados.email
         }
+
 
         
         localStorage.setItem('userInfo', JSON.stringify(this.dadosUsuario))

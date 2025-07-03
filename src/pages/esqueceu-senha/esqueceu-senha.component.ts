@@ -30,7 +30,7 @@ export class EsqueceuSenhaComponent {
     private modalService: NgbModal // injetar serviço
   ) {
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
     });
   }
 

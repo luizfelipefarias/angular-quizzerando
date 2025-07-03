@@ -20,7 +20,7 @@ import { LogoSideLayerComponent } from '../../components/logo-side-layer/logo-si
 export class LoginComponent implements OnInit {
   form: FormGroup;
   loginInvalido: string = '';
-  validated: boolean = false;
+  validated=false;
 
   constructor(
     private fb: FormBuilder,
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     private titleService: Title
   ) {
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
       senha: ['', Validators.required]
     });
 
@@ -50,13 +50,12 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit() {
-  this.validated = true;
+  this.validated=true
   this.loginInvalido = '';
 
   if (this.form.invalid) {
     this.form.markAllAsTouched();
-    this.loginInvalido = 'Por favor, corrija os campos em vermelho.';
-    return;
+    return
   }
   const data = this.form.value;
 

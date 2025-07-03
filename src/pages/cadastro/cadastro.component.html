@@ -1,12 +1,12 @@
 <div class="d-flex flex-wrap vh-100 align-items-stretch w-100">
-   <!-- Lado azul com clip-path animado -->
+   
  <app-logo-side-layer class="col-12 col-md-5"></app-logo-side-layer>
 
   <div class="form-cadastro col-12 col-md-7 d-flex align-items-center justify-content-center">
     <div class="card p-4 bg-light border border-light rounded-4" style="width: 23rem;">
       <h4 class="text-center mb-4">Cadastre-se</h4>
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate [class.was-validated]="validated" autocomplete="off">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate  autocomplete="off">
 
         <div class="mb-3">
           <label for="nome" class="form-label">Nome</label>
@@ -17,10 +17,11 @@
             placeholder="Digite o seu nome"
             required
             class="form-control"
-            [class.is-invalid]="form.get('nome')?.invalid && (form.get('nome')?.touched || validated)"
+            [class.is-invalid]="form.get('nome')?.invalid && form.get('nome')?.touched  && validated"
+            [class.is-valid]="form.get('nome')?.valid && (form.get('nome')?.touched ) && validated"
             (input)="onInputChange()"
           />
-          <div class="invalid-feedback">
+          <div class="invalid-feedback" *ngIf="validated">
             Por favor, digite um nome válido (mínimo 5 caracteres).
           </div>
         </div>
@@ -34,12 +35,17 @@
             placeholder="Digite o seu email"
             required
             class="form-control"
-            [class.is-invalid]="form.get('email')?.invalid && (form.get('email')?.touched || validated)"
+            [class.is-invalid]="form.get('email')?.invalid && (form.get('email')?.touched ) && validated || form.hasError('emailRegistrado')"
+            [class.is-valid]="form.get('email')?.valid && (form.get('email')?.touched )&&!form.hasError('emailRegistrado') && validated"
             (input)="onInputChange()"
           />
-          <div class="invalid-feedback">
+          <div class="invalid-feedback" *ngIf="!form.hasError('emailRegistrado') && validated">
             Por favor, digite um email válido.
           </div>
+          <small class="text-danger" *ngIf="form.hasError('emailRegistrado') && validated">
+          O email inserido já está cadastrado.
+        </small>
+          
         </div>
 
         <div class="mb-3">
@@ -52,10 +58,11 @@
             required
             minlength="8"
             class="form-control"
-            [class.is-invalid]="form.get('senha')?.invalid && (form.get('senha')?.touched || validated)"
+            [class.is-invalid]="form.get('senha')?.invalid && (form.get('senha')?.touched ) && validated"
+            [class.is-valid]="form.get('senha')?.valid && (form.get('senha')?.touched ) && validated"
             (input)="onInputChange()"
           />
-          <div class="invalid-feedback">
+          <div class="invalid-feedback" *ngIf="validated">
             A senha deve ter no mínimo 8 caracteres.
           </div>
         </div>
@@ -70,17 +77,20 @@
             required
             minlength="8"
             class="form-control"
-            [class.is-invalid]="form.get('confirmar')?.invalid && (form.get('confirmar')?.touched || validated)"
-            (input)="onInputChange()"
-          />
-          <div class="invalid-feedback">
-            As senhas devem coincidir.
-          </div>
+            [class.is-invalid]="(form.hasError('senhasDiferentes') && validated)  || ( form.get('confirmar')?.invalid && validated )"
+            [class.is-valid]="!form.hasError('senhasDiferentes')  && form.get('confirmar')?.valid && validated" />
+          
+          <div *ngIf="validated"
+        class="text-danger mx-2">
+        <small *ngIf="form.hasError('senhasDiferentes')">
+          As senhas devem coincidir.
+        </small>
+        <small *ngIf="form.get('confirmar')?.errors?.['required']">Campo vazio.</small>
+
+      </div>
         </div>
 
-        <div *ngIf="passwordMatchError" class="text-danger py-0 my-0">
-          {{ passwordMatchError }}
-        </div>
+       
 
         <div class="d-flex justify-content-between mt-2 pt-4">
 

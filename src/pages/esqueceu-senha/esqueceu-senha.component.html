@@ -9,12 +9,12 @@
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
     </div>
     <div class="modal-body fs-5">
-      Um link foi enviado para o seu e-mail com as instruções para redefinição de senha.
+      Caso o e-mail esteja cadastrado, você receberá uma nova senha com instruções para acesso.
     </div>
   </ng-template>
 
   <div class="form-esqueceu-senha col-12 col-md-7 d-flex align-items-center justify-content-center">
-    <form [formGroup]="form" (ngSubmit)="onSubmit(modalContent)" novalidate [class.was-validated]="validated" autocomplete="off" style="width: 23rem;" class="p-4 bg-light border border-light rounded-4">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(modalContent)" novalidate autocomplete="off" style="width: 23rem;" class="p-4 bg-light border border-light rounded-4">
       <h4 class="text-center mb-3" routerLink="/esqueceu-senha" >Esqueceu a senha?</h4>
       <p style="color: gray;">
         Não se preocupe, informe o seu email abaixo para começar o processo de recuperação do acesso à conta.
@@ -29,7 +29,8 @@
           class="form-control"
           placeholder="Digite o seu email"
           required
-          [class.is-invalid]="email?.invalid && (email?.touched || validated)"
+          [class.is-invalid]="email?.invalid && email?.touched && validated"
+          [class.is-valid]="email?.valid && email?.touched && validated"
         />
         <div class="invalid-feedback">
           Por favor, digite um email válido.

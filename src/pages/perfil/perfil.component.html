@@ -97,7 +97,7 @@
       <div class="d-flex align-items-center mt-1">
         <input type="password" class="form-control" id="confirmeSenha" placeholder="Confirme sua nova senha"
           formControlName="confirmeSenha"
-          [class.is-invalid]="formSenha.hasError('senhasDiferentes') && formEnviado"
+          [class.is-invalid]="(formSenha.hasError('senhasDiferentes') && formEnviado)  || ( formSenha.get('confirmeSenha')?.invalid && formEnviado )"
           [class.is-valid]="!formSenha.hasError('senhasDiferentes') && formEnviado && formSenha.get('confirmeSenha')?.valid " />
       </div>
 

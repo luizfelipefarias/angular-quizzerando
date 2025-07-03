@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators,AbstractControl, ValidationErrors } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../app/services/authContexts';
 import { LogoSideLayerComponent } from '../../components/logo-side-layer/logo-side-layer.component';
@@ -24,30 +24,41 @@ export class CadastroComponent {
   ) {
     this.form = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(5)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
       senha: ['', [Validators.required, Validators.minLength(8)]],
-      confirmar: ['', [Validators.required, Validators.minLength(8)]]
-    });
+      confirmar: ['', [Validators.required]]
+    },{
+    validators: this.senhasIguaisValidator // <-- Aqui está o ajuste
+  });
   }
-voltarParaLogin() {
-  this.router.navigate(['/login']);
-}
+
+  senhasIguaisValidator(group: AbstractControl): ValidationErrors | null {
+      const senha = group.get('senha')?.value;
+      const confirma = group.get('confirmar')?.value;
+  
+      if (!senha || !confirma) {
+        return null; // enquanto digita
+      }
+      return senha === confirma ? null : { senhasDiferentes: true };
+    }
+  voltarParaLogin() {
+    this.router.navigate(['/login']);
+  }
   onInputChange() {
     this.passwordMatchError = '';
   }
 
   onSubmit() {
     this.validated = true;
+   
     this.passwordMatchError = '';
 
     if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
 
-    if (this.form.value.senha !== this.form.value.confirmar) {
-      this.passwordMatchError = 'As senhas não coincidem!';
-      return;
-    }
+    
 
     const payload = {
       nome: this.form.value.nome,
@@ -60,8 +71,12 @@ voltarParaLogin() {
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        alert(`Erro: ${err.status}`);
-        console.error(err);
+        if (err.status === 500) {
+          this.form.setErrors({ emailRegistrado: true });
+
+        }
+        
+        
       }
     });
   }
