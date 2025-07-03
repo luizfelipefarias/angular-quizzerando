@@ -103,11 +103,12 @@ export class PerguntaQuizComponent {
       next: (res:any) => {
         console.log('Resultado salvo com sucesso', res);
        
-        this.finalizarQuiz.emit({ acertos: this.corretas, total: this.perguntasLength });
       },
       error: (err) => {
         console.error('Erro ao salvar resultado', err);
         
+      },
+      complete: () => {
         this.finalizarQuiz.emit({ acertos: this.corretas, total: this.perguntasLength });
       }
     });
