@@ -29,8 +29,8 @@
           class="form-control"
           placeholder="Digite o seu email"
           required
-          [class.is-invalid]="email?.invalid && email?.touched && validated"
-          [class.is-valid]="email?.valid && email?.touched && validated"
+          [class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched && validated"
+          [class.is-valid]="form.get('email')?.valid && form.get('email')?.touched && validated"
         />
         <div class="invalid-feedback">
           Por favor, digite um email válido.

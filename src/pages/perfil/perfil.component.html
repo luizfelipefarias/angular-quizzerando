@@ -134,10 +134,10 @@
       <div *ngIf="formEmail.get('email')?.invalid && formEnviado || formEmail.hasError('emailRegistrado')" class="text-danger mx-1 ">
         <small *ngIf="formEmail.get('email')?.errors?.['required']">Campo vazio.</small>
         <small *ngIf="formEmail.get('email')?.errors?.['pattern']">
-          Formato de email fora do padrão.
+          Formato de e-mail fora do padrão.
         </small>
         <small *ngIf="formEmail.hasError('emailRegistrado')">
-          O email inserido já está cadastrado.
+          O e-mail inserido já está cadastrado.
         </small>
       </div>
       <div class="d-flex justify-content-center">

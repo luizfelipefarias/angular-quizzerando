@@ -42,6 +42,7 @@ export class EsqueceuSenhaComponent {
     this.errorMessage = '';
 
     if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
 

@@ -22,7 +22,7 @@
             (input)="onInputChange()"
           />
           <div class="invalid-feedback" *ngIf="validated">
-            Por favor, digite um nome válido (mínimo 5 caracteres).
+            Digite um nome válido (mínimo 5 caracteres).
           </div>
         </div>
 
@@ -40,10 +40,10 @@
             (input)="onInputChange()"
           />
           <div class="invalid-feedback" *ngIf="!form.hasError('emailRegistrado') && validated">
-            Por favor, digite um email válido.
+            Insira um e-mail válido.
           </div>
           <small class="text-danger" *ngIf="form.hasError('emailRegistrado') && validated">
-          O email inserido já está cadastrado.
+          O e-mail inserido já está cadastrado.
         </small>
           
         </div>
@@ -85,7 +85,7 @@
         <small *ngIf="form.hasError('senhasDiferentes')">
           As senhas devem coincidir.
         </small>
-        <small *ngIf="form.get('confirmar')?.errors?.['required']">Campo vazio.</small>
+        <small *ngIf="form.get('confirmar')?.errors?.['required']">Confirme sua senha.</small>
 
       </div>
         </div>
