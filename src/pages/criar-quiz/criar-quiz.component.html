@@ -117,8 +117,7 @@
 
             <div class="mx-auto col-12 card-container">
 
-                <div *ngFor="let pergunta of perguntas; let index = index"
-                    class="card border border-2 rounded-4 p-2 my-2 col-11 mx-auto">
+                <div *ngFor="let pergunta of perguntas; let index = index">
                     <app-card-pergunta [pergunta]="pergunta" [index]="index"
                         (event)="handleDelete(index)"></app-card-pergunta>
                 </div>
